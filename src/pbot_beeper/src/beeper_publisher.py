@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import rospy
 from std_msgs.msg import String
 
@@ -7,5 +9,6 @@ rospy.loginfo("Hello from PUB node")
 r = rospy.Rate(10) # 10hz
 
 while not rospy.is_shutdown():
-    pub.publish("Hello World")
-    r.sleep()
+    pub.publish(String("Hello World"))
+    rospy.loginfo("Pub message")
+    rospy.sleep(1.0)
