@@ -1,24 +1,29 @@
 #!/usr/bin/env python
 
 import rospy
+from beeper import Beeper
 from std_msgs.msg import String
 
-def callback(data):
-        rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+class BeeperWrapper:
+    def __init__(self):
+        self.beeper = Beeper()
+        rospy.init_node('beeper')
+        rospy.Subscriber("beeper_topic", String, self.callback_beep)
 
-def listener():
+    def callback_beep(self, msg):
+        rospy.loginfo(rospy.get_caller_id() + "I heard %s", msg.data);
 
-       # In ROS, nodes are uniquely named. If two nodes with the same
-       # name are launched, the previous one is kicked off. The
-       # anonymous=True flag means that rospy will choose a unique
-       # name for our 'listener' node so that multiple listeners can
-       # run simultaneously.
-       rospy.init_node('listener', anonymous=True)
+    def cleanup(self):
+        self.beeper.cleanup()
 
-       rospy.Subscriber("beeper_topic", String, callback)
 
-       # spin() simply keeps python from exiting until this node is stopped
+def start():
+       rospy.loginfo("Beeper node started")
+       b = BeeperWrapper()
+       rospy.on_shutdown(b.cleanup)
+
+       rospy.loginfo("Beeper node started")
        rospy.spin()
 
 if __name__ == '__main__':
-    listener()
+    start()
