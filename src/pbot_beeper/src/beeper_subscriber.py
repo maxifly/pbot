@@ -11,7 +11,8 @@ class BeeperWrapper:
         rospy.Subscriber("beeper_topic", String, self.callback_beep)
 
     def callback_beep(self, msg):
-        rospy.loginfo(rospy.get_caller_id() + "I heard %s", msg.data);
+        rospy.loginfo(rospy.get_caller_id() + "I heard %s", msg.data)
+        self.beeper.beep()
 
     def cleanup(self):
         self.beeper.cleanup()
