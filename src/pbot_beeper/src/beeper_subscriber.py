@@ -3,12 +3,14 @@
 import rospy
 from beeper import Beeper
 from std_msgs.msg import String
+from pbot_beeper.msg import Beep
 
 class BeeperWrapper:
     def __init__(self):
         self.beeper = Beeper()
         rospy.init_node('beeper')
         rospy.Subscriber("beeper_topic", String, self.callback_beep)
+        rospy.Subscriber("beeper_topic", Beep, self.callback_beep)
 
     def callback_beep(self, msg):
         rospy.loginfo(rospy.get_caller_id() + "I heard %s", msg.data)
