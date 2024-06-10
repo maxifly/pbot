@@ -124,8 +124,11 @@ class Beeper:
         self.p.stop()
 
     def beep(self):
-        self.beep_melody([('BH4', 1.)])
-        self.beep_melody([('NTC7', 1.)])
+        self.beep_melody([('BH4', 1.),
+                         ('NTC7', 1.)])
+
+    def note_exists(self, tone):
+        return tone in dict
 
     def cleanup(self):
         GPIO.cleanup()
