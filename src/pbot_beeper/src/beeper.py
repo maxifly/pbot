@@ -128,7 +128,10 @@ class Beeper:
                          ('NTC7', 1.)])
 
     def note_exists(self, tone):
-        return tone in dict
+        if tone in dict:
+            return True
+        else:
+            return False
 
     def cleanup(self):
         GPIO.cleanup()
