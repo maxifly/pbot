@@ -12,13 +12,13 @@ class BeeperWrapper:
         rospy.init_node('beeper')
         rospy.Subscriber("beeper_topic", Beep, self.callback_beep)
 
-    def callback_beep(self, msg):
-        rospy.loginfo(rospy.get_caller_id() + "I heard %s", msg.data)
+    def callback_beep(self, msg : Beep):
+        rospy.loginfo(rospy.get_caller_id() + "I heard %s", msg)
 
-        if msg.data.type == 2:
+        if msg.type == 2:
             # This is melody
             melody = []
-            for note in msg.data.melody:
+            for note in msg.melody:
                 if self.beeper.note_exists(note.note):
                     rospy.logerr("Note %s not existent", note.note)
                 melody.append((note.note, note.duration))
