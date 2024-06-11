@@ -128,7 +128,7 @@ class Beeper:
                          ('NTC7', 1.)])
 
     def note_exists(self, tone):
-        if tone in dict:
+        if tone in notes:
             return True
         else:
             return False
