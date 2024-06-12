@@ -206,15 +206,29 @@ class Beeper:
         self.p = GPIO.PWM(32, 240)
 
     def beep_tune(self, tune, duration):
-        notes.get(tune)
-        self.p.ChangeFrequency(notes.get(tune))
-        time.sleep(duration)
+        if tune == 'PAUSE':
+            time.sleep(duration)
+        else:
+            self.p.ChangeFrequency(notes.get(tune))
+            self.p.start(1)
+            notes.get(tune)
+            time.sleep(duration)
+            self.p.stop()
+    # def beep_tune(self, tune, duration):
+    #     notes.get(tune)
+    #     self.p.ChangeFrequency(notes.get(tune))
+    #     time.sleep(duration)
+
+    # def beep_melody(self, melody):
+    #     self.p.start(1)
+    #     for (tune, duration) in melody:
+    #         self.beep_tune(tune, duration)
+    #     self.p.stop()
 
     def beep_melody(self, melody):
-        self.p.start(1)
         for (tune, duration) in melody:
             self.beep_tune(tune, duration)
-        self.p.stop()
+            time.sleep(duration*1.25)
 
     def beep(self):
         self.beep_melody([('E6', 1.),
