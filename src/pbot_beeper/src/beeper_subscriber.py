@@ -23,7 +23,7 @@ class BeeperWrapper:
                     rospy.logerr("Note %s not existent", note.note)
                 else:
                     melody.append((note.note, note.duration))
-            self.beeper.beep_melody(melody)
+            self.beeper.beep_melody(melody, msg.tempo)
         else:
             # This is default beep
             self.beeper.beep()

@@ -225,14 +225,14 @@ class Beeper:
     #         self.beep_tune(tune, duration)
     #     self.p.stop()
 
-    def beep_melody(self, melody):
+    def beep_melody(self, melody, tempo):
         for (tune, duration) in melody:
             self.beep_tune(tune, duration)
-            time.sleep(duration*1.25)
+            time.sleep(duration * tempo)
 
     def beep(self):
-        self.beep_melody([('E6', 1.),
-                          ('B4', 1.)])
+        self.beep_melody([('AS4', 1.),
+                          ('F4', 1.)], 0.25)
 
     def note_exists(self, tone):
         if tone in notes:
