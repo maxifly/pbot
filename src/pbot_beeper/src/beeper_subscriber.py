@@ -37,7 +37,7 @@ def start():
        b = BeeperWrapper()
        rospy.on_shutdown(b.cleanup)
 
-       rospy.loginfo("Beeper node started")
+       rospy.loginfo("Beeper node cleaned")
        rospy.spin()
 
 

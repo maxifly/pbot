@@ -61,11 +61,11 @@ class MotorWrapper:
 
 
 def start():
-    rospy.loginfo("Beeper node started")
-    b = BeeperWrapper()
-    rospy.on_shutdown(b.cleanup)
+    rospy.loginfo("Motors node started")
+    m = MotorWrapper()
+    rospy.on_shutdown(m.cleanup)
 
-    rospy.loginfo("Beeper node started")
+    rospy.loginfo("Motors node cleaned")
     rospy.spin()
 
 
