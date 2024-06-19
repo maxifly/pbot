@@ -9,10 +9,10 @@ import time
 class MotorWrapper:
     def __init__(self):
         self.motors = YB_Pcb_Car.YB_Pcb_Car()
-        # self._current_right_speed = 0.
-        # self._current_left_speed = 0.
-        self._current_right_speed = 0
-        self._current_left_speed = 0
+        self._current_right_rotation_speed = 0.
+        self._current_left_rotation_speed = 0.
+        self._current_right_command_value = 0
+        self._current_left_command_value = 0
         rospy.init_node('pbot_motors')
         rospy.Subscriber("/pbot/right_wheel/target_velocity", Float64, self.callback_right_wheel)
         rospy.Subscriber("/pbot/left_wheel/target_velocity", Float64, self.callback_left_wheel)
@@ -26,27 +26,37 @@ class MotorWrapper:
 
     def callback_right_wheel(self, msg: Float64):
         rospy.loginfo("right")
-        self._current_right_speed = self.normalize_speed(msg.data)
-        rospy.loginfo("current command left: {} right: {}".format(
-                      self._current_left_speed, self._current_right_speed))
-        self.motors.Control_Car(self._current_left_speed, self._current_right_speed)
-        self.pub_right_wheel.publish(self._current_right_speed)
-        time.sleep(2)
-        self.motors.Car_Stop()
+        self._current_right_rotation_speed = self.normalize_rotation_speed(msg.data)
+        self._current_right_command_value = self.convert_rotation_to_command(self._current_right_rotation_speed)
+        self.pub_right_wheel.publish(self._current_right_rotation_speed)
+        self.driver_command()
 
     def callback_left_wheel(self, msg: Float64):
         rospy.loginfo("left")
-        self._current_left_speed = self.normalize_speed(msg.data)
-        self.pub_left_wheel.publish(self._current_left_speed)
+        self._current_left_rotation_speed = self.normalize_rotation_speed(msg.data)
+        self._current_left_command_value = self.convert_rotation_to_command(self._current_left_rotation_speed)
+        self.pub_left_wheel.publish(self._current_left_rotation_speed)
+        self.driver_command()
 
     # TODO speed translate
-    # TODO driver command
 
-    def normalize_speed(self, speed):
+    def driver_command(self):
+        rospy.logdebug("current command left: {} right: {}".format(
+            self._current_left_command_value, self._current_right_command_value))
+        self.motors.Control_Car(self._current_left_command_value, self._current_right_command_value)
+
+    def normalize_rotation_speed(self, speed):
+        if 0 > speed > -25.0:
+            return -25.0
+        if 0 < speed < 25.0:
+            return 25.0
         if speed < -180.0:
             return -180.0
         if speed > 180.0:
-            return 180
+            return 180.0
+        return speed
+
+    def convert_rotation_to_command(self, speed):
         return int(speed)
 
 
