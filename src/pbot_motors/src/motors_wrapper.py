@@ -9,7 +9,7 @@ class MotorWrapper:
         self.motors = YB_Pcb_Car.YB_Pcb_Car()
         self._current_right_speed = 0.
         self._current_left_speed = 0.
-        rospy.init_node('beeper')
+        rospy.init_node('pbot_motors')
         rospy.Subscriber("/pbot/right_wheel/target_velocity", Float64, self.callback_beep)
         rospy.Subscriber("/pbot/left_wheel/target_velocity", Float64, self.callback_beep)
 
