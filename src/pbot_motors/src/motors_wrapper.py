@@ -12,8 +12,8 @@ class MotorWrapper:
         self._current_right_speed = 0.
         self._current_left_speed = 0.
         rospy.init_node('pbot_motors')
-        rospy.Subscriber("/pbot/right_wheel/target_velocity", Float64, self.callback_beep)
-        rospy.Subscriber("/pbot/left_wheel/target_velocity", Float64, self.callback_beep)
+        rospy.Subscriber("/pbot/right_wheel/target_velocity", Float64, self.callback_right_wheel)
+        rospy.Subscriber("/pbot/left_wheel/target_velocity", Float64, self.callback_left_wheel)
 
         self.pub_right_wheel = rospy.Publisher("/pbot/right_wheel/current_velocity", Float64, queue_size=10)
         self.pub_left_wheel = rospy.Publisher("/pbot/left_wheel/current_velocity", Float64, queue_size=10)
