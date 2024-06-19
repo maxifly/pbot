@@ -43,13 +43,14 @@ class MotorWrapper:
     def driver_command(self):
         rospy.logdebug("current command left: {} right: {}".format(
             self._current_left_command_value, self._current_right_command_value))
-        self.motors.Control_Car(self._current_left_command_value, self._current_right_command_value)
+        if self._current_left_command_value == 0 and self._current_right_command_value == 0:
+            self.motors.Car_Stop()
+        else:
+            self.motors.Control_Car(self._current_left_command_value, self._current_right_command_value)
 
     def normalize_rotation_speed(self, speed):
-        if 0 > speed > -25.0:
-            return -25.0
-        if 0 < speed < 25.0:
-            return 25.0
+        if -24.9 < speed < 24.9:
+            return 0.0
         if speed < -180.0:
             return -180.0
         if speed > 180.0:
