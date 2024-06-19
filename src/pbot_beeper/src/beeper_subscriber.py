@@ -12,7 +12,7 @@ class BeeperWrapper:
         rospy.init_node('beeper')
         rospy.Subscriber("beeper_topic", Beep, self.callback_beep)
 
-    def callback_beep(self, msg : Beep):
+    def callback_beep(self, msg: Beep):
         rospy.loginfo(rospy.get_caller_id() + "I heard %s", msg)
 
         if msg.type == 2:
@@ -33,12 +33,11 @@ class BeeperWrapper:
 
 
 def start():
-       rospy.loginfo("Beeper node started")
-       b = BeeperWrapper()
-       rospy.on_shutdown(b.cleanup)
+    b = BeeperWrapper()
+    rospy.on_shutdown(b.cleanup)
 
-       rospy.loginfo("Beeper node cleaned")
-       rospy.spin()
+    rospy.loginfo("Beeper node started")
+    rospy.spin()
 
 
 if __name__ == '__main__':

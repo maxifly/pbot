@@ -9,8 +9,10 @@ import time
 class MotorWrapper:
     def __init__(self):
         self.motors = YB_Pcb_Car.YB_Pcb_Car()
-        self._current_right_speed = 0.
-        self._current_left_speed = 0.
+        # self._current_right_speed = 0.
+        # self._current_left_speed = 0.
+        self._current_right_speed = 0
+        self._current_left_speed = 0
         rospy.init_node('pbot_motors')
         rospy.Subscriber("/pbot/right_wheel/target_velocity", Float64, self.callback_right_wheel)
         rospy.Subscriber("/pbot/left_wheel/target_velocity", Float64, self.callback_left_wheel)
@@ -25,11 +27,12 @@ class MotorWrapper:
     def callback_right_wheel(self, msg: Float64):
         rospy.loginfo("right")
         self._current_right_speed = self.normalize_speed(msg.data)
+        rospy.loginfo("current command left: {} right: {}",
+                      self._current_left_speed, self._current_right_speed)
         self.motors.Control_Car(self._current_left_speed, self._current_right_speed)
         self.pub_right_wheel.publish(self._current_right_speed)
         time.sleep(2)
         self.motors.Car_Stop()
-
 
     def callback_left_wheel(self, msg: Float64):
         rospy.loginfo("left")
@@ -41,7 +44,7 @@ class MotorWrapper:
 
     def normalize_speed(self, speed):
         if speed < -180.0:
-            return  -180.0
+            return -180.0
         if speed > 180.0:
             return 180
         return int(speed)
@@ -64,11 +67,10 @@ class MotorWrapper:
 
 
 def start():
-    rospy.loginfo("Motors node started")
     m = MotorWrapper()
     rospy.on_shutdown(m.cleanup)
 
-    rospy.loginfo("Motors node cleaned")
+    rospy.loginfo("Motors node started")
     rospy.spin()
 
 
