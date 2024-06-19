@@ -25,7 +25,10 @@ class MotorWrapper:
     def callback_right_wheel(self, msg: Float64):
         rospy.loginfo("right")
         self._current_right_speed = self.normalize_speed(msg.data)
+        self.motors.Control_Car(self._current_left_speed, self._current_right_speed)
         self.pub_right_wheel.publish(self._current_right_speed)
+        time.sleep(2)
+        self.motors.Car_Stop()
 
 
     def callback_left_wheel(self, msg: Float64):
@@ -41,7 +44,7 @@ class MotorWrapper:
             return  -180.0
         if speed > 180.0:
             return 180
-        return speed
+        return int(speed)
 
 
 # car = YB_Pcb_Car.YB_Pcb_Car()
