@@ -21,20 +21,23 @@ class YB_Pcb_Car(object):
     def write_u8(self, reg, data):
         try:
             self._device.write_byte_data(self._addr, reg, data)
-        except:
+        except  Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
             print('write_u8 I2C error')
 
     def write_reg(self, reg):
         try:
             self._device.write_byte(self._addr, reg)
-        except:
+        except  Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
             print('write_u8 I2C error')
 
     def write_array(self, reg, data):
         try:
             # self._device.write_block_data(self._addr, reg, data)
             self._device.write_i2c_block_data(self._addr, reg, data)
-        except:
+        except  Exception as err:
+            print(f"Unexpected {err=}, {type(err)=}")
             print('write_array I2C error')
 
     def Ctrl_Car(self, l_dir, l_speed, r_dir, r_speed):
