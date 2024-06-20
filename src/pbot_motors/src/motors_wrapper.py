@@ -41,7 +41,7 @@ class MotorWrapper:
     # TODO speed translate
 
     def driver_command(self):
-        rospy.logdebug("current command left: {} right: {}".format(
+        rospy.loginfo("current command left: {} right: {}".format(
             self._current_left_command_value, self._current_right_command_value))
         if self._current_left_command_value == 0 and self._current_right_command_value == 0:
             self.motors.Car_Stop()
