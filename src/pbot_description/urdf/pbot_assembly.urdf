@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="pbot_assembly">
+  <link
+    name="pbot_base">
+    <inertial>
+      <origin
+        xyz="-0.0126793836830341 4.44350410814448E-10 -0.00681296059112218"
+        rpy="0 0 0" />
+      <mass
+        value="0.28831638977324" />
+      <inertia
+        ixx="0.000131169085410887"
+        ixy="-4.3600054751417E-15"
+        ixz="9.31897878301522E-06"
+        iyy="0.000567748496773017"
+        iyz="-9.53741865535676E-15"
+        izz="0.000682526229970573" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pbot_assembly/meshes/pbot_base.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.698039215686274 0.698039215686274 0.698039215686274 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pbot_assembly/meshes/pbot_base.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="pbot_rf_w">
+    <inertial>
+      <origin
+        xyz="2.9058E-11 0.00027973 5.9298E-10"
+        rpy="0 0 0" />
+      <mass
+        value="0.030238" />
+      <inertia
+        ixx="1.157E-05"
+        ixy="7.6572E-15"
+        ixz="-8.7242E-14"
+        iyy="1.9609E-05"
+        iyz="-1.3863E-13"
+        izz="1.157E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pbot_assembly/meshes/pbot_rf_w.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pbot_assembly/meshes/pbot_rf_w.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="pbot_rf_w_to_base"
+    type="continuous">
+    <origin
+      xyz="0.045046 -0.0705 -0.013263"
+      rpy="0 0.016895 0" />
+    <parent
+      link="pbot_base" />
+    <child
+      link="pbot_rf_w" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="pbot_rr_w">
+    <inertial>
+      <origin
+        xyz="5.388E-10 0.00027973 5.4071E-10"
+        rpy="0 0 0" />
+      <mass
+        value="0.030238" />
+      <inertia
+        ixx="1.157E-05"
+        ixy="-1.3445E-13"
+        ixz="-3.6496E-14"
+        iyy="1.9609E-05"
+        iyz="-1.236E-13"
+        izz="1.157E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pbot_assembly/meshes/pbot_rr_w.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pbot_assembly/meshes/pbot_rr_w.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="pbot_rr_w_to_base"
+    type="continuous">
+    <origin
+      xyz="-0.074937 -0.0705 -0.011236"
+      rpy="0 0.016895 0" />
+    <parent
+      link="pbot_base" />
+    <child
+      link="pbot_rr_w" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="pbot_lf_w">
+    <inertial>
+      <origin
+        xyz="2.2904E-10 -0.00027973 -1.3045E-10"
+        rpy="0 0 0" />
+      <mass
+        value="0.030238" />
+      <inertia
+        ixx="1.157E-05"
+        ixy="6.3103E-14"
+        ixz="-1.9026E-14"
+        iyy="1.9609E-05"
+        iyz="-5.1829E-14"
+        izz="1.157E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pbot_assembly/meshes/pbot_lf_w.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pbot_assembly/meshes/pbot_lf_w.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="pbot_lf_w_to_base"
+    type="continuous">
+    <origin
+      xyz="0.045046 0.0705 -0.013263"
+      rpy="0 0.016895 0" />
+    <parent
+      link="pbot_base" />
+    <child
+      link="pbot_lf_w" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+  <link
+    name="pbot_lr_w">
+    <inertial>
+      <origin
+        xyz="-1.3858E-10 -0.00027973 1.3827E-10"
+        rpy="0 0 0" />
+      <mass
+        value="0.030238" />
+      <inertia
+        ixx="1.157E-05"
+        ixy="-3.977E-14"
+        ixz="5.9664E-14"
+        iyy="1.9609E-05"
+        iyz="1.6868E-14"
+        izz="1.157E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pbot_assembly/meshes/pbot_lr_w.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pbot_assembly/meshes/pbot_lr_w.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="pbot_lr_w_to_base"
+    type="continuous">
+    <origin
+      xyz="-0.074937 0.0705 -0.011236"
+      rpy="0 0.016895 0" />
+    <parent
+      link="pbot_base" />
+    <child
+      link="pbot_lr_w" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+</robot>

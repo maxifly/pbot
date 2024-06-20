@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot
+        xmlns:xacro="http://www.ros.org/wiki/xacro"
+        name="pbot">
+    <!-- Matherials -->
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_materials.xacro"/>
+    <xacro:property name="clearance" value="0.043" />
+
+    <!-- base_footprint -->
+    <link name="base_footprint">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder length="0.001" radius="0.110" />
+            </geometry>
+            <material name="Blue" />
+        </visual>
+    </link>
+    <joint name="base_footprint_to_base_link" type="fixed">
+        <origin xyz="0 0 ${clearance}" rpy="0 0 0" />
+        <parent link="base_footprint" />
+        <child link="base_link" />
+    </joint>
+
+    <!-- base_link -->
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius="0.001"/>
+            </geometry>
+        </visual>
+    </link>
+    <joint name="base_link_to_pbot_base" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="pbot_base"/>
+    </joint>
+
+    <link
+            name="pbot_base">
+        <inertial>
+            <origin
+                    xyz="-0.0126793836830341 4.44350410814448E-10 -0.00681296059112218"
+                    rpy="0 0 0"/>
+            <mass
+                    value="0.28831638977324"/>
+            <inertia
+                    ixx="0.000131169085410887"
+                    ixy="-4.3600054751417E-15"
+                    ixz="9.31897878301522E-06"
+                    iyy="0.000567748496773017"
+                    iyz="-9.53741865535676E-15"
+                    izz="0.000682526229970573"/>
+        </inertial>
+        <visual>
+            <origin
+                    xyz="0 0 0"
+                    rpy="0 0 0"/>
+            <geometry>
+                <mesh
+                        filename="package://pbot_description/meshes/pbot_base.STL"/>
+            </geometry>
+            <material
+                    name="White">
+                <!--                <color-->
+                <!--                        rgba="0.698039215686274 0.698039215686274 0.698039215686274 1"/>-->
+            </material>
+        </visual>
+        <collision>
+            <origin
+                    xyz="0 0 0"
+                    rpy="0 0 0"/>
+            <geometry>
+                <mesh
+                        filename="package://pbot_description/meshes/pbot_base.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- Wheels -->
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_rf_w.xacro" />
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_rr_w.xacro" />
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_lf_w.xacro" />
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_lr_w.xacro" />
+</robot>
