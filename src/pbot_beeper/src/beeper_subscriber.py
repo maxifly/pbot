@@ -26,6 +26,7 @@ class BeeperWrapper:
             self.beeper.beep_melody(melody, msg.tempo)
         else:
             # This is default beep
+            rospy.loginfo("Play beep")
             self.beeper.beep()
 
     def cleanup(self):

@@ -3,7 +3,4 @@
   <node pkg="pbot_beeper" type="beeper_subscriber.py" name="beeper" output="screen">
   </node>
   
-  <node pkg="pbot_motors" type="motors_wrapper.py" name="pbot_motors" output="screen">
-  </node>
-  
 </launch>

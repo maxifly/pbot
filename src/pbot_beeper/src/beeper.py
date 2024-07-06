@@ -4,6 +4,8 @@
 import time
 import RPi.GPIO as GPIO
 
+BUZZER_PIN = 24
+
 notes1 = dict(
     BL1=248,
     BL2=278,
@@ -202,8 +204,8 @@ class Beeper:
     def __init__(self):
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(32, GPIO.OUT)
-        self.p = GPIO.PWM(32, 240)
+        GPIO.setup(BUZZER_PIN, GPIO.OUT)
+        # self.p = GPIO.PWM(BUZZER_PIN, 240)
 
     def beep_tune(self, tune, duration):
         if tune == 'PAUSE':
@@ -214,6 +216,7 @@ class Beeper:
             notes.get(tune)
             time.sleep(duration)
             self.p.stop()
+
     # def beep_tune(self, tune, duration):
     #     notes.get(tune)
     #     self.p.ChangeFrequency(notes.get(tune))
@@ -226,13 +229,21 @@ class Beeper:
     #     self.p.stop()
 
     def beep_melody(self, melody, tempo):
-        for (tune, duration) in melody:
-            self.beep_tune(tune, duration)
-            time.sleep(duration * tempo)
+        # PWM in 4WD plate unsupported
+        self.beep()
+        # for (tune, duration) in melody:
+        #     self.beep_tune(tune, duration)
+        #     time.sleep(duration * tempo)
 
     def beep(self):
-        self.beep_melody([('AS4', 1.),
-                          ('F4', 1.)], 0.25)
+        # PWM in 4WD plate unsupported
+        GPIO.output(BUZZER_PIN, GPIO.LOW)
+        time.sleep(0.1)
+        GPIO.output(BUZZER_PIN, GPIO.HIGH)
+        time.sleep(0.001)
+
+        # self.beep_melody([('AS4', 1.),
+        #                   ('F4', 1.)], 0.25)
 
     def note_exists(self, tone):
         if tone in notes:
