@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import YB_Pcb_Car
+import motor
 import rospy
 from std_msgs.msg import Float64
 import time
@@ -8,7 +8,7 @@ import time
 
 class MotorWrapper:
     def __init__(self):
-        self.motors = YB_Pcb_Car.YB_Pcb_Car()
+        self.left_motor = motor.left_motor()
         self._current_right_rotation_speed = 0.
         self._current_left_rotation_speed = 0.
         self._current_right_command_value = 0
@@ -21,32 +21,29 @@ class MotorWrapper:
         self.pub_left_wheel = rospy.Publisher("/pbot/left_wheel/current_velocity", Float64, queue_size=10)
 
     def cleanup(self):
-        self.motors.Car_Stop()
-        del self.motors
+        self.left_motor.stop()
+        del self.left_motor
 
     def callback_right_wheel(self, msg: Float64):
         rospy.loginfo("right")
-        self._current_right_rotation_speed = self.normalize_rotation_speed(msg.data)
-        self._current_right_command_value = self.convert_rotation_to_command(self._current_right_rotation_speed)
-        self.pub_right_wheel.publish(self._current_right_rotation_speed)
-        self.driver_command()
+        # self._current_right_rotation_speed = self.normalize_rotation_speed(msg.data)
+        # self._current_right_command_value = self.convert_rotation_to_command(self._current_right_rotation_speed)
+        # self.pub_right_wheel.publish(self._current_right_rotation_speed)
+        # self.driver_command()
 
     def callback_left_wheel(self, msg: Float64):
         rospy.loginfo("left")
         self._current_left_rotation_speed = self.normalize_rotation_speed(msg.data)
         self._current_left_command_value = self.convert_rotation_to_command(self._current_left_rotation_speed)
         self.pub_left_wheel.publish(self._current_left_rotation_speed)
-        self.driver_command()
 
-    # TODO speed translate
-
-    def driver_command(self):
-        rospy.loginfo("current command left: {} right: {}".format(
-            self._current_left_command_value, self._current_right_command_value))
-        if self._current_left_command_value == 0 and self._current_right_command_value == 0:
-            self.motors.Car_Stop()
+        if self._current_left_command_value == 0:
+            self.left_motor.stop()
         else:
-            self.motors.Control_Car(self._current_left_command_value, self._current_right_command_value)
+            if self._current_left_command_value > 0:
+                self.left_motor.forward(self._current_left_command_value)
+            else:
+                self.left_motor.backward(self._current_left_command_value)
 
     def normalize_rotation_speed(self, speed):
         if -24.9 < speed < 24.9:
