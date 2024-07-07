@@ -3,17 +3,21 @@ import RPi.GPIO as GPIO
 
 def left_motor():
     return Motor(38, 40, 36)
+
+
 def right_motor():
     return Motor(35, 37, 33)
 
 
 def normal_speed(speed):
-    if speed < 0:
+    abs_speed = abs(speed)
+
+    if abs_speed < 0:
         return 0
-    if speed > 100:
+    if abs_speed > 100:
         return 100
 
-    return speed
+    return abs_speed
 
 
 class Motor:
