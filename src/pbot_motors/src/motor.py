@@ -11,7 +11,7 @@ def right_motor():
 
 def normal_speed(speed):
     abs_speed = abs(speed)
-    rospy.loginfo("abs_speed %n", abs_speed)
+    rospy.loginfo("abs_speed %s", abs_speed)
     if abs_speed < 0:
         return 0
     if abs_speed > 100:
