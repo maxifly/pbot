@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-
+import rospy
 
 def left_motor():
     return Motor(38, 40, 36)
@@ -11,7 +11,7 @@ def right_motor():
 
 def normal_speed(speed):
     abs_speed = abs(speed)
-
+    rospy.loginfo("abs_speed %n", abs_speed)
     if abs_speed < 0:
         return 0
     if abs_speed > 100:
