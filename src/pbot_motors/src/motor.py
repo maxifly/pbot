@@ -3,13 +3,15 @@ import RPi.GPIO as GPIO
 
 def left_motor():
     return Motor(38, 40, 36)
+def right_motor():
+    return Motor(35, 37, 33)
 
 
 def normal_speed(speed):
-    if speed < 50:
-        return 50
-    if speed > 255:
-        return 255
+    if speed < 0:
+        return 0
+    if speed > 100:
+        return 100
 
     return speed
 
@@ -48,3 +50,6 @@ class Motor:
         GPIO.output(self._forward_pin, GPIO.LOW)
         GPIO.output(self._backward_pin, GPIO.LOW)
         self._pwm.ChangeDutyCycle(0)
+
+    def cleanup(self):
+        GPIO.cleanup()

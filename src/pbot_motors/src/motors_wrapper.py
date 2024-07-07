@@ -9,6 +9,7 @@ import time
 class MotorWrapper:
     def __init__(self):
         self.left_motor = motor.left_motor()
+        self.right_motor = motor.right_motor()
         self._current_right_rotation_speed = 0.
         self._current_left_rotation_speed = 0.
         self._current_right_command_value = 0
@@ -22,14 +23,25 @@ class MotorWrapper:
 
     def cleanup(self):
         self.left_motor.stop()
+        self.right_motor.stop()
+        self.left_motor.cleanup()
+        self.right_motor.cleanup()
         del self.left_motor
+        del self.right_motor
 
     def callback_right_wheel(self, msg: Float64):
         rospy.loginfo("right")
-        # self._current_right_rotation_speed = self.normalize_rotation_speed(msg.data)
-        # self._current_right_command_value = self.convert_rotation_to_command(self._current_right_rotation_speed)
-        # self.pub_right_wheel.publish(self._current_right_rotation_speed)
-        # self.driver_command()
+        self._current_right_rotation_speed = self.normalize_rotation_speed(msg.data)
+        self._current_right_command_value = self.convert_rotation_to_command(self._current_right_rotation_speed)
+        self.pub_right_wheel.publish(self._current_right_rotation_speed)
+
+        if self._current_right_command_value == 0:
+            self.right_motor.stop()
+        else:
+            if self._current_right_command_value > 0:
+                self.right_motor.forward(self._current_right_command_value)
+            else:
+                self.right_motor.backward(self._current_right_command_value)
 
     def callback_left_wheel(self, msg: Float64):
         rospy.loginfo("left")
@@ -46,33 +58,16 @@ class MotorWrapper:
                 self.left_motor.backward(self._current_left_command_value)
 
     def normalize_rotation_speed(self, speed):
-        if -24.9 < speed < 24.9:
-            return 0.0
-        if speed < -180.0:
-            return -180.0
-        if speed > 180.0:
-            return 180.0
+        # if -24.9 < speed < 24.9:
+        #     return 0.0
+        if speed < -100.0:
+            return -100.0
+        if speed > 100.0:
+            return 100.0
         return speed
 
     def convert_rotation_to_command(self, speed):
         return int(speed)
-
-
-# car = YB_Pcb_Car.YB_Pcb_Car()
-#
-# i = 0
-# for i in range(2):
-#     car.Car_Run(150, 150)
-#     time.sleep(2)
-#     car.Car_Spin_Left(48, 48)
-#     time.sleep(2)
-#     car.Car_Run(150, 150)
-#     time.sleep(2)
-#     car.Car_Spin_Left(48, 48)
-#     time.sleep(2)
-#     i += 1
-# car.Car_Stop()
-
 
 def start():
     m = MotorWrapper()
