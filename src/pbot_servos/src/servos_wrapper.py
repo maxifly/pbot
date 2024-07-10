@@ -2,6 +2,7 @@
 
 import servo
 import rospy
+from geometry_msgs.msg import Twist
 from std_msgs.msg import Int16
 
 
@@ -24,6 +25,7 @@ class ServosWrapper:
 
     def cleanup(self):
         del self.cam_h_servo
+        del self.cam_v_servo
 
     def callback_cam_h(self, msg: Int16):
         rospy.loginfo("cam_h. Target position %s", msg.data)
@@ -32,14 +34,23 @@ class ServosWrapper:
         self.pub_h_servo.publish(self._current_cam_h_pos)
 
     def callback_cam_v(self, msg: Int16):
-        rospy.loginfo("cam_h. Target position %s", msg.data)
+        rospy.loginfo("cam_v. Target position %s", msg.data)
 
         self._current_cam_v_pos = self.cam_v_servo.servo_appointed_detection(msg.data)
         self.pub_v_servo.publish(self._current_cam_v_pos)
 
+class CamServos:
+    def __init__(self):
+        rospy.init_node('pbot_cam_servos')
+        rospy.Subscriber("/pbot/cam_servos", Twist, self.callback)
+
+    def callback(self, msg: Twist):
+        rospy.loginfo("cam_servos. Twist %s", msg)
 
 def start():
     s = ServosWrapper()
+    cs = CamServos()
+
     rospy.on_shutdown(s.cleanup)
 
     rospy.loginfo("Servo node started")
