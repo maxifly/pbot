@@ -6,7 +6,7 @@
   <node pkg="pbot_motors" type="motors_wrapper.py" name="pbot_motors" output="screen">
   </node>
 
-  <node pkg="pbot_servo" type="servo_wrapper.py" name="pbot_servo" output="screen">
+  <node pkg="pbot_servos" type="servos_wrapper.py" name="pbot_servos" output="screen">
   </node>
 
 </launch>
