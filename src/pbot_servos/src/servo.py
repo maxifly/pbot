@@ -6,6 +6,9 @@ import rospy
 def cam_h_servo():
     return Servo(23)
 
+def cam_v_servo():
+    return Servo(21)
+
 def normal_pos(pos):
     if pos < 0:
         return 0
