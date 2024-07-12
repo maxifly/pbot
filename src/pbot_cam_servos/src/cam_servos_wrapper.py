@@ -50,8 +50,6 @@ class CamServos:
 def start():
     cs = CamServos()
 
-    rospy.on_shutdown(s.cleanup)
-
     rospy.loginfo("Servo node started")
     rospy.spin()
 
