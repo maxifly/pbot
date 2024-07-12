@@ -56,4 +56,5 @@ class Motor:
         self._pwm.ChangeDutyCycle(0)
 
     def cleanup(self):
-        GPIO.cleanup()
+        r = 1
+        # GPIO.cleanup()
