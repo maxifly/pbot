@@ -39,17 +39,9 @@ class ServosWrapper:
         self._current_cam_v_pos = self.cam_v_servo.servo_appointed_detection(msg.data)
         self.pub_v_servo.publish(self._current_cam_v_pos)
 
-class CamServos:
-    def __init__(self):
-        rospy.init_node('pbot_cam_servos')
-        rospy.Subscriber("/pbot/cam_servos", Twist, self.callback)
-
-    def callback(self, msg: Twist):
-        rospy.loginfo("cam_servos. Twist %s", msg)
 
 def start():
     s = ServosWrapper()
-    cs = CamServos()
 
     rospy.on_shutdown(s.cleanup)
 

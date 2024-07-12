@@ -12,4 +12,19 @@
   <node pkg="pbot_cam_servos" type="cam_servos_wrapper.py" name="pbot_cam_servos" output="screen">
   </node>
 
+  <!-- main nodelet manager -->
+  <node pkg="nodelet" type="nodelet" name="nodelet_manager" args="manager" output="screen" clear_params="true">
+        <param name="num_worker_threads" value="4"/>
+  </node>
+
+    <!-- camera node - настройка публикации изображения с помощью модуля cv_camera -->
+  <node pkg="nodelet" type="nodelet" name="main_camera" args="load cv_camera/CvCameraNodelet nodelet_manager" clear_params="true">
+        <param name="frame_id" value="main_camera_optical"/>
+	<!-- setting camera FPS -->
+        <param name="rate" value="100"/>
+        <param name="cv_cap_prop_fps" value="40"/>
+        <param name="image_width" value="640"/>
+        <param name="image_height" value="480"/>
+  </node>
+
 </launch>
