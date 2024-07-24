@@ -70,7 +70,7 @@ class MotorWrapper:
                 self.left_motor.backward(self._current_left_command_value)
 
     def callback_cmd_vel(self, msg: Twist):
-        rospy.loginfo("Velocity command %s", msg)
+        rospy.logdebug("Velocity command %s", msg)
         if (self._current_cmd_x_speed != msg.linear.x
                 or self._current_cmd_z_angular_speed != msg.angular.z):
             self._current_cmd_x_speed = msg.linear.x
@@ -91,7 +91,7 @@ class MotorWrapper:
         return speed
 
     def convert_rotation_to_pwm(self, speed):
-        return int(speed * rad2pwm_k)
+        return int(speed / rad2pwm_k)
 
 
 def start():
