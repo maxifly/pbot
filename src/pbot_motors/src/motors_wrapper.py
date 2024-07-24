@@ -26,7 +26,7 @@ class MotorWrapper:
         rospy.init_node('pbot_motors')
         rospy.Subscriber("/pbot/right_wheel/target_velocity", Float64, self.callback_right_wheel)
         rospy.Subscriber("/pbot/left_wheel/target_velocity", Float64, self.callback_left_wheel)
-        rospy.Subscriber("/pbot/cmd_vel", Twist, self.callback_left_wheel)
+        rospy.Subscriber("/pbot/cmd_vel", Twist, self.callback_cmd_vel)
 
         self.pub_right_wheel = rospy.Publisher("/pbot/right_wheel/current_velocity", Float64, queue_size=10)
         self.pub_left_wheel = rospy.Publisher("/pbot/left_wheel/current_velocity", Float64, queue_size=10)
