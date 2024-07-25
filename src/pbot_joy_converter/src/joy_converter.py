@@ -16,10 +16,10 @@ class JoyConverter:
         self.srv = Server(joy_converterConfig, self.config_callback)
 
         # Настройка подписчика на сообщения Joy
-        self.joy_sub = rospy.Subscriber('/joy', Joy, self.joy_callback)
+        self.joy_sub = rospy.Subscriber('/pbot/joy', Joy, self.joy_callback)
 
         # Настройка издателя для сообщений Twist
-        self.twist_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+        self.twist_pub = rospy.Publisher('/pbot/cmd_vel', Twist, queue_size=10)
 
         # Начальные значения ограничений
         self.max_linear_velocity = 0.5  # м/с
@@ -53,8 +53,8 @@ class JoyConverter:
 
         # Маппинг кнопок и осей джойстика на данные Twist
         twist.linear.x = data.axes[1] * self.max_linear_velocity
-        twist.linear.y = data.axes[0] * 0.5  # Скорость движения влево/вправо
-        twist.angular.z = data.axes[2] * self.max_angular_velocity
+        # twist.linear.y = data.axes[0] * 0.5  # Скорость движения влево/вправо
+        twist.angular.z = data.axes[0] * self.max_angular_velocity
 
         # Применение ограничений на максимальные скорости
         twist.linear.x = max(min(twist.linear.x, self.max_linear_velocity), -self.max_linear_velocity)
