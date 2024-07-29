@@ -54,7 +54,7 @@ class JoyConverter:
         # Маппинг кнопок и осей джойстика на данные Twist
         twist.linear.x = data.axes[1] * self.max_linear_velocity
         # twist.linear.y = data.axes[0] * 0.5  # Скорость движения влево/вправо
-        twist.angular.z = data.axes[0] * self.max_angular_velocity
+        twist.angular.z = -1. * data.axes[0] * self.max_angular_velocity
 
         # Применение ограничений на максимальные скорости
         twist.linear.x = max(min(twist.linear.x, self.max_linear_velocity), -self.max_linear_velocity)
