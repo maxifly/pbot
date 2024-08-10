@@ -16,7 +16,7 @@
   </node>
 
   <rosparam file="$(find pbot_base)/config/foxglove_config.yaml" command="load" />
-  <node pkg="foxglove_bridge" type="foxglove_bridge_server" name="foxglove_bridge_server"
+  <node pkg="foxglove_bridge" type="foxglove_bridge" name="foxglove_bridge"
   output="screen" args="--config-file $(find pbot_base)/config/foxglove_config.yaml"/>
 
 
