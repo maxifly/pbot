@@ -4,6 +4,7 @@ import rospy
 from sensor_msgs.msg import Joy
 from geometry_msgs.msg import Twist
 from dynamic_reconfigure.server import Server
+from std_msgs.msg import Int16
 from pbot_joy_converter.cfg import joy_converterConfig
 
 
@@ -16,10 +17,13 @@ class JoyConverter:
         self.srv = Server(joy_converterConfig, self.config_callback)
 
         # Настройка подписчика на сообщения Joy
-        self.joy_sub = rospy.Subscriber('/joy', Joy, self.joy_callback)
+        self.joy_sub = rospy.Subscriber('/pbot/joy', Joy, self.joy_callback)
 
         # Настройка издателя для сообщений Twist
         self.twist_pub = rospy.Publisher('/pbot/cmd_vel', Twist, queue_size=10)
+
+        self.cam_h_pub = rospy.Publisher('/pbot/cam_h_servo/cam_v_change_pos', Int16, queue_size=10)
+        self.cam_v_pub = rospy.Publisher('/pbot/cam_v_servo/cam_v_change_pos', Int16, queue_size=10)
 
         # Начальные значения ограничений
         self.max_linear_velocity = 0.5  # м/с
@@ -37,7 +41,7 @@ class JoyConverter:
         self.max_linear_velocity = config.max_linear_velocity
         self.max_angular_velocity = config.max_angular_velocity
         rospy.loginfo("Reconfigure request: max_linear_velocity=%f, max_angular_velocity=%f" % (
-        config.max_linear_velocity, config.max_angular_velocity))
+            config.max_linear_velocity, config.max_angular_velocity))
         return config
 
     def joy_callback(self, data):
@@ -62,6 +66,16 @@ class JoyConverter:
 
         # Публикуем сообщение Twist
         self.twist_pub.publish(twist)
+
+        if data.buttons[0] == 1:
+            self.cam_v_pub.publish(1)
+        if data.buttons[4] == 1:
+            self.cam_v_pub.publish(-1)
+
+        if data.buttons[3] == 1:
+            self.cam_h_pub.publish(1)
+        if data.buttons[1] == 1:
+            self.cam_h_pub.publish(-1)
 
 
 if __name__ == '__main__':
