@@ -16,7 +16,7 @@ class JoyConverter:
         self.srv = Server(joy_converterConfig, self.config_callback)
 
         # Настройка подписчика на сообщения Joy
-        self.joy_sub = rospy.Subscriber('/pbot/joy', Joy, self.joy_callback)
+        self.joy_sub = rospy.Subscriber('/joy', Joy, self.joy_callback)
 
         # Настройка издателя для сообщений Twist
         self.twist_pub = rospy.Publisher('/pbot/cmd_vel', Twist, queue_size=10)
