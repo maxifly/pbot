@@ -15,6 +15,11 @@
   <node pkg="pbot_joy_converter" type="joy_converter.py" name="pbot_joy_converter" output="screen">
   </node>
 
+  <rosparam file="$(find pbot_base)/config/foxglove_config.yaml" command="load" />
+  <node pkg="foxglove_bridge" type="foxglove_bridge_server" name="foxglove_bridge_server"
+  output="screen" args="--config-file $(find pbot_base)/config/foxglove_config.yaml"/>
+
+
   <!-- main nodelet manager -->
   <node pkg="nodelet" type="nodelet" name="nodelet_manager" args="manager" output="screen" clear_params="true">
         <param name="num_worker_threads" value="4"/>

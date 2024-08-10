@@ -1,0 +1,2 @@
+record: false # Включать/выключать запись данных
+filename: /tmp/foxglove_data.bag # Файл для записи
