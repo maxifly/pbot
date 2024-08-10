@@ -15,9 +15,9 @@ class ServosWrapper:
         rospy.init_node('pbot_servos')
         rospy.Subscriber("/pbot/cam_h_servo/target_pos", Int16, self.callback_cam_h)
         rospy.Subscriber("/pbot/cam_v_servo/target_pos", Int16, self.callback_cam_v)
-        rospy.Subscriber("/pbot/cam_h_servo/cam_h_change_pos", Int16, self.callback_cam_h_change)
-        rospy.Subscriber("/pbot/cam_v_servo/cam_v_change_pos", Int16, self.callback_cam_v_change)
-        rospy.Subscriber("/pbot/cam_v_servo/cam_reset_pos", Int16, self.callback_cam_reset)
+        rospy.Subscriber("/pbot/cam_h_servo/change_pos", Int16, self.callback_cam_h_change)
+        rospy.Subscriber("/pbot/cam_v_servo/change_pos", Int16, self.callback_cam_v_change)
+        rospy.Subscriber("/pbot/cam_v_servo/reset_pos", Int16, self.callback_cam_reset)
 
         self.pub_h_servo = rospy.Publisher("/pbot/cam_h_servo/current_pos", Int16, queue_size=10)
         self.pub_v_servo = rospy.Publisher("/pbot/cam_v_servo/current_pos", Int16, queue_size=10)

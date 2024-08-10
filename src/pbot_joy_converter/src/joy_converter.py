@@ -22,8 +22,9 @@ class JoyConverter:
         # Настройка издателя для сообщений Twist
         self.twist_pub = rospy.Publisher('/pbot/cmd_vel', Twist, queue_size=10)
 
-        self.cam_h_pub = rospy.Publisher('/pbot/cam_h_servo/cam_v_change_pos', Int16, queue_size=10)
-        self.cam_v_pub = rospy.Publisher('/pbot/cam_v_servo/cam_v_change_pos', Int16, queue_size=10)
+        self.cam_h_pub = rospy.Publisher('/pbot/cam_h_servo/change_pos', Int16, queue_size=10)
+        self.cam_v_pub = rospy.Publisher('/pbot/cam_v_servo/change_pos', Int16, queue_size=10)
+        self.cam_v_reset_pos = rospy.Publisher('/pbot/cam_v_servo/reset_pos', Int16, queue_size=10)
 
         # Начальные значения ограничений
         self.max_linear_velocity = 0.5  # м/с
@@ -76,6 +77,8 @@ class JoyConverter:
             self.cam_h_pub.publish(1)
         if data.buttons[1] == 1:
             self.cam_h_pub.publish(-1)
+        if data.buttons[11] == 1:
+            self.cam_v_reset_pos.publish(1)
 
 
 if __name__ == '__main__':
