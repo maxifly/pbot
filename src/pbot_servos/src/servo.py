@@ -32,6 +32,6 @@ class Servo:
         n_pos = self.normalize(pos)
         # for i in range(18):
         self._pwm.ChangeDutyCycle(2.5 + 10 * n_pos / 180)
-        time.sleep(0.02)
+        time.sleep(0.5)
         self._pwm.ChangeDutyCycle(0)
         return n_pos
