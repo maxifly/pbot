@@ -6,6 +6,7 @@ from geometry_msgs.msg import Twist
 from dynamic_reconfigure.server import Server
 from std_msgs.msg import Int16
 from pbot_joy_converter.cfg import joy_converterConfig
+from pbot_beeper.msg import Beep
 
 
 class JoyConverter:
@@ -26,9 +27,12 @@ class JoyConverter:
         self.cam_v_pub = rospy.Publisher('/pbot/cam_v_servo/change_pos', Int16, queue_size=10)
         self.cam_v_reset_pos = rospy.Publisher('/pbot/cam_v_servo/reset_pos', Int16, queue_size=10)
 
+        self.beeper_pub = rospy.Publisher('/pbot/beeper_topic', Beep, queue_size=10)
+
         # Начальные значения ограничений
         self.max_linear_velocity = 0.5  # м/с
         self.max_angular_velocity = 1.0  # рад/с
+
 
     def config_callback(self, config, level):
         """
@@ -79,6 +83,10 @@ class JoyConverter:
             self.cam_h_pub.publish(-1)
         if data.buttons[11] == 1:
             self.cam_v_reset_pos.publish(1)
+        if data.buttons[10] == 1:
+            beeper = Beep()
+            beeper.type = 1
+            self.beeper_pub.publish(beeper)
 
 
 if __name__ == '__main__':

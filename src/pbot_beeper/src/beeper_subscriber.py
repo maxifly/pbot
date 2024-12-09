@@ -10,7 +10,7 @@ class BeeperWrapper:
     def __init__(self):
         self.beeper = Beeper()
         rospy.init_node('beeper')
-        rospy.Subscriber("beeper_topic", Beep, self.callback_beep)
+        rospy.Subscriber("/pbot/beeper_topic", Beep, self.callback_beep)
 
     def callback_beep(self, msg: Beep):
         rospy.loginfo(rospy.get_caller_id() + "I heard %s", msg)

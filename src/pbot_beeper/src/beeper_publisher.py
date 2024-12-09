@@ -5,7 +5,7 @@ from std_msgs.msg import String
 from pbot_beeper.msg import Beep
 from pbot_beeper.msg import Note
 
-pub = rospy.Publisher('beeper_topic', Beep, queue_size=10)
+pub = rospy.Publisher('/pbot/beeper_topic', Beep, queue_size=10)
 rospy.init_node('beeper_topic_publisher')
 rospy.loginfo("Hello from PUB node")
 r = rospy.Rate(10) # 10hz
