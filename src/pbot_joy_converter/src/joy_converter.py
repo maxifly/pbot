@@ -91,7 +91,7 @@ class JoyConverter:
             self.beeper_pub.publish(beeper)
         if data.buttons[6] == 1:
             self.special_pub.publish(1)
-        if data.buttons[6] == 7:
+        if data.buttons[7] == 1:
             self.special_pub.publish(2)
 
 
