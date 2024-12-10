@@ -12,6 +12,9 @@
   <node pkg="pbot_cam_servos" type="cam_servos_wrapper.py" name="pbot_cam_servos" output="screen">
   </node>
 
+  <node pkg="pbot_special_mode" type="tracker.py" name="special_move" output="screen">
+  </node>
+
   <node pkg="pbot_joy_converter" type="joy_converter.py" name="pbot_joy_converter" output="screen">
   </node>
 
