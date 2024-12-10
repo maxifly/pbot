@@ -76,6 +76,10 @@ class Tracker:
             trackSensorRightValue1 = GPIO.input(TrackSensorRightPin1)
             trackSensorRightValue2 = GPIO.input(TrackSensorRightPin2)
 
+            rospy.loginfo("L1 %s L2 %s R1 %s R2 %s",
+                          trackSensorLeftValue1, trackSensorLeftValue2,
+                          trackSensorRightValue1, trackSensorRightValue2)
+
             # 4 tracking pins level status
             # 0 0 X 0
             # 1 0 X 0
