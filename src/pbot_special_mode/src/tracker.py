@@ -33,7 +33,7 @@ class Tracker:
         self.twist_pub = rospy.Publisher('/pbot/cmd_vel', Twist, queue_size=10)
         self.track_pub = rospy.Publisher('/pbot/track', Int8, queue_size=1)
 
-    def callback_left_wheel(self, msg: Int8):
+    def mode_callback(self, msg: Int8):
         rospy.loginfo("mode %s", msg)
 
         if msg.data == 1:
