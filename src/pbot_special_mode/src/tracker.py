@@ -86,7 +86,7 @@ class Tracker:
             # 0 1 X 0
             # Turn right in place,speed is 50,delay 80ms
             # Handle right acute angle and right right angle
-            if (trackSensorLeftValue1 is False or trackSensorLeftValue2 is False) and trackSensorRightValue2 is False:
+            if (trackSensorLeftValue1 == 0 or trackSensorLeftValue2 == 0) and trackSensorRightValue2 == 0:
                 self.spin_right()
             # time.sleep(0.08)
 
@@ -96,34 +96,34 @@ class Tracker:
             # 0 X 1 0
             # Turn right in place,speed is 50,delay 80ms
             # Handle left acute angle and left right angle
-            elif trackSensorLeftValue1 is False and (
-                    trackSensorRightValue1 is False or trackSensorRightValue2 is False):
+            elif trackSensorLeftValue1 == 0 and (
+                    trackSensorRightValue1 == 0 or trackSensorRightValue2 == 0):
                 self.spin_left()
             # time.sleep(0.08)
 
             # 0 X X X
             # Left_sensor1 detected black line
-            elif trackSensorLeftValue1 is False:
+            elif trackSensorLeftValue1 == 0:
                 self.spin_left()
 
             # X X X 0
             # Right_sensor2 detected black line
-            elif trackSensorRightValue2 is False:
+            elif trackSensorRightValue2 == 0:
                 self.spin_right()
 
             # 4 tracking pins level status
             # X 0 1 X
-            elif trackSensorLeftValue2 is False and trackSensorRightValue1 is True:
+            elif trackSensorLeftValue2 == 0 and trackSensorRightValue1 == 1:
                 self.left()
 
             # 4 tracking pins level status
             # X 1 0 X
-            elif trackSensorLeftValue2 is True and trackSensorRightValue1 is False:
+            elif trackSensorLeftValue2 == 1 and trackSensorRightValue1 == 0:
                 self.right()
 
             # 4 tracking pins level status
             # X 0 0 X
-            elif trackSensorLeftValue2 is False and trackSensorRightValue1 is False:
+            elif trackSensorLeftValue2 == 0 and trackSensorRightValue1 == 0:
                 self.forward()
 
             # When the level of 4 pins are 1 1 1 1 , the car keeps the previous running state.
