@@ -77,7 +77,7 @@ class JoyConverter:
             twist1 = Twist()
             twist1.linear.x = 0.
             twist1.angular.z = 0.15
-            self.twist_pub.publish(twist)
+            self.twist_pub.publish(twist1)
 
         if data.buttons[0] == 1:
             self.cam_v_pub.publish(1)
