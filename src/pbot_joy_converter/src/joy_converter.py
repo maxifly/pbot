@@ -35,7 +35,6 @@ class JoyConverter:
         self.max_linear_velocity = 0.5  # м/с
         self.max_angular_velocity = 1.0  # рад/с
 
-
     def config_callback(self, config, level):
         """
         Обработчик обратного вызова для сервера динамической реконфигурации.
@@ -58,21 +57,27 @@ class JoyConverter:
         Args:
             data (sensor_msgs.msg.Joy): Сообщение Joy, полученное от подписчика.
         """
+        if data.axes[2] == 0. and data.axes[3] == 0.:
+            # Создаем объект Twist для хранения данных о скорости и угловой скорости
+            twist = Twist()
 
-        # Создаем объект Twist для хранения данных о скорости и угловой скорости
-        twist = Twist()
+            # Маппинг кнопок и осей джойстика на данные Twist
+            twist.linear.x = data.axes[1] * self.max_linear_velocity
+            # twist.linear.y = data.axes[0] * 0.5  # Скорость движения влево/вправо
+            twist.angular.z = -1. * data.axes[0] * self.max_angular_velocity
 
-        # Маппинг кнопок и осей джойстика на данные Twist
-        twist.linear.x = data.axes[1] * self.max_linear_velocity
-        # twist.linear.y = data.axes[0] * 0.5  # Скорость движения влево/вправо
-        twist.angular.z = -1. * data.axes[0] * self.max_angular_velocity
+            # Применение ограничений на максимальные скорости
+            twist.linear.x = max(min(twist.linear.x, self.max_linear_velocity), -self.max_linear_velocity)
+            twist.angular.z = max(min(twist.angular.z, self.max_angular_velocity), -self.max_angular_velocity)
 
-        # Применение ограничений на максимальные скорости
-        twist.linear.x = max(min(twist.linear.x, self.max_linear_velocity), -self.max_linear_velocity)
-        twist.angular.z = max(min(twist.angular.z, self.max_angular_velocity), -self.max_angular_velocity)
+            # Публикуем сообщение Twist
+            self.twist_pub.publish(twist)
 
-        # Публикуем сообщение Twist
-        self.twist_pub.publish(twist)
+        if data.axes[2] != 0. or data.axes[3] != 0.:
+            twist1 = Twist()
+            twist1.linear.x = 0.
+            twist1.angular.z = 0.15
+            self.twist_pub.publish(twist)
 
         if data.buttons[0] == 1:
             self.cam_v_pub.publish(1)

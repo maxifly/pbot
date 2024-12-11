@@ -53,11 +53,11 @@ class Tracker:
         self._spin_left.angular.z = -0.15
 
         self._right = Twist()
-        self._right.linear.x = 0.01
+        self._right.linear.x = 0.008
         self._right.angular.z = 0.15
 
         self._left = Twist()
-        self._left.linear.x = 0.01
+        self._left.linear.x = 0.008
         self._left.angular.z = -0.15
 
         self._forward = Twist()
@@ -103,7 +103,7 @@ class Tracker:
 
         self.init_message()
 
-        rate = rospy.Rate(1)
+        rate = rospy.Rate(5)
 
         while self._tracker_on:
             rospy.loginfo("tracking")
