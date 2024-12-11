@@ -53,15 +53,15 @@ class Tracker:
         self._spin_left.angular.z = -0.15
 
         self._right = Twist()
-        self._right.linear.x = 0.005
+        self._right.linear.x = 0.01
         self._right.angular.z = 0.15
 
         self._left = Twist()
-        self._left.linear.x = 0.005
+        self._left.linear.x = 0.01
         self._left.angular.z = -0.15
 
         self._forward = Twist()
-        self._forward.linear.x = 0.005
+        self._forward.linear.x = 0.01
         self._forward.angular.z = 0.
 
     def mode_callback(self, msg: Int8):
