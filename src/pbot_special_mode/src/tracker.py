@@ -33,6 +33,37 @@ class Tracker:
         self.twist_pub = rospy.Publisher('/pbot/cmd_vel', Twist, queue_size=10)
         self.track_pub = rospy.Publisher('/pbot/track', Int8, queue_size=1)
 
+        self._spin_right = Twist()
+        self._spin_left = Twist()
+        self._right = Twist()
+        self._left = Twist()
+        self._forward = Twist()
+        self._stop = Twist()
+        self._stop.linear.x = 0.
+        self._stop.angular.z = 0.
+
+    def init_message(self):
+
+        self._spin_right = Twist()
+        self._spin_right.linear.x = 0.
+        self._spin_right.angular.z = 0.15
+
+        self._spin_left = Twist()
+        self._spin_left.linear.x = 0.
+        self._spin_left.angular.z = -0.15
+
+        self._right = Twist()
+        self._right.linear.x = 0.05
+        self._right.angular.z = 0.15
+
+        self._left = Twist()
+        self._left.linear.x = 0.05
+        self._left.angular.z = -0.15
+
+        self._forward = Twist()
+        self._forward.linear.x = 0.05
+        self._forward.angular.z = 0.
+
     def mode_callback(self, msg: Int8):
         rospy.loginfo("mode %s", msg)
 
@@ -45,24 +76,32 @@ class Tracker:
 
     def spin_right(self):
         rospy.loginfo("spin right")
+        self.twist_pub.publish(self._spin_right)
 
     def spin_left(self):
-        rospy.loginfo("spin right")
+        rospy.loginfo("spin left")
+        self.twist_pub.publish(self._spin_left)
 
     def right(self):
         rospy.loginfo("right")
+        self.track_pub.publish(self._right)
 
     def left(self):
         rospy.loginfo("right")
+        self.track_pub.publish(self._left)
 
     def forward(self):
         rospy.loginfo("forward")
+        self.track_pub.publish(self._forward)
 
     def stop(self):
         rospy.loginfo("stop")
+        self.track_pub.publish(self._stop)
 
     def track_callback(self, msg: Int8):
         rospy.loginfo("Start tracking")
+
+        self.init_message()
 
         rate = rospy.Rate(1)
 
