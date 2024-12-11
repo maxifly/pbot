@@ -76,7 +76,11 @@ class JoyConverter:
         if data.axes[2] != 0. or data.axes[3] != 0.:
             twist1 = Twist()
             twist1.linear.x = 0.
-            twist1.angular.z = 0.15
+            if data.axes[2] < 0.:
+                twist1.angular.z = 0.15
+            else:
+                twist1.angular.z = -0.15
+                
             self.twist_pub.publish(twist1)
 
         if data.buttons[0] == 1:
