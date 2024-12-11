@@ -84,19 +84,19 @@ class Tracker:
 
     def right(self):
         rospy.loginfo("right")
-        self.track_pub.publish(self._right)
+        self.twist_pub.publish(self._right)
 
     def left(self):
         rospy.loginfo("right")
-        self.track_pub.publish(self._left)
+        self.twist_pub.publish(self._left)
 
     def forward(self):
         rospy.loginfo("forward")
-        self.track_pub.publish(self._forward)
+        self.twist_pub.publish(self._forward)
 
     def stop(self):
         rospy.loginfo("stop")
-        self.track_pub.publish(self._stop)
+        self.twist_pub.publish(self._stop)
 
     def track_callback(self, msg: Int8):
         rospy.loginfo("Start tracking")
