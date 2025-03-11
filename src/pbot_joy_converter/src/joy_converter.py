@@ -31,6 +31,10 @@ class JoyConverter:
         self.beeper_pub = rospy.Publisher('/pbot/beeper_topic', Beep, queue_size=10)
         self.special_pub = rospy.Publisher('/pbot/special_mode', Int8, queue_size=10)
 
+        self.ultrasound_pub = rospy.Publisher('/pbot/ultrasound_mode', Int8, queue_size=10)
+
+        self.ultrasound_on = False
+
         # Начальные значения ограничений
         self.max_linear_velocity = 0.5  # м/с
         self.max_angular_velocity = 1.0  # рад/с
@@ -57,6 +61,11 @@ class JoyConverter:
         Args:
             data (sensor_msgs.msg.Joy): Сообщение Joy, полученное от подписчика.
         """
+
+        if not self.ultrasound_on:
+            self.ultrasound_pub.publish(1)
+            self.ultrasound_on = True
+
         if data.axes[2] == 0. and data.axes[3] == 0.:
             # Создаем объект Twist для хранения данных о скорости и угловой скорости
             twist = Twist()
