@@ -15,6 +15,9 @@
   <node pkg="pbot_special_mode" type="tracker.py" name="special_move" output="screen">
   </node>
 
+  <node pkg="pbot_ultrasound" type="ultrasound_wrapper.py" name="ultrasound" output="screen">
+  </node>
+
   <node pkg="pbot_joy_converter" type="joy_converter.py" name="pbot_joy_converter" output="screen">
   </node>
 
