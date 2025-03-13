@@ -8,12 +8,13 @@ from sensor_msgs.msg import Range
 
 class UltrasoundWrapper:
     def __init__(self):
+        self._ultrasound_on = False
         self.ultrasound = ultrasound.Ultrasound()
 
         rospy.init_node('pbot_ultrasound')
 
         # Настройка подписчика на сообщения Int
-        self.mode_sub = rospy.Subscriber('/pbot/sultrasound_mode', Int8, self.mode_callback)
+        self.mode_sub = rospy.Subscriber('/pbot/ultrasound_mode', Int8, self.mode_callback)
         self.ultrasound_sub = rospy.Subscriber('/pbot/ultrasound', Int8, self.ultrasound_callback)
 
         # Настройка издателя для сообщений Range
@@ -26,20 +27,21 @@ class UltrasoundWrapper:
     def mode_callback(self, msg: Int8):
         rospy.loginfo("mode %s", msg)
 
-        if msg.data == 1:
+        if msg.data == 1 and not self._ultrasound_on:
             self._ultrasound_on = True
             self.ultrasound_pub.publish(1)
 
         if msg.data == 2:
             self._ultrasound_on = False
 
-    def ultrasound_callback(self):
+    def ultrasound_callback(self, msg: Int8):
         rospy.loginfo("Start ultrasound")
 
         rate = rospy.Rate(5)
 
         while self._ultrasound_on:
             rospy.loginfo("Calculate distance")
+
 
             min_dist, max_dist, avg_dist = self.ultrasound.distance_test()
 

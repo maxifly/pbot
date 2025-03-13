@@ -8,10 +8,10 @@ class Ultrasound:
     def __init__(self):
 
         GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BCM)
 
-        self._echo_pin = 27
-        self._trig_pin = 28
+        self._echo_pin = 0
+        self._trig_pin = 1
 
         GPIO.setup(self._echo_pin, GPIO.IN)
         GPIO.setup(self._trig_pin, GPIO.OUT)
