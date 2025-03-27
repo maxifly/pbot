@@ -42,7 +42,7 @@ class MotorWrapper:
         del self.right_motor
 
     def callback_right_wheel(self, msg: Float64):
-        rospy.loginfo("right")
+        rospy.logdebug("right")
         self._current_right_rotation_speed = self.normalize_rotation_speed(msg.data)
         self._current_right_command_value = self.convert_rotation_to_pwm(self._current_right_rotation_speed)
         self.pub_right_wheel.publish(self._current_right_rotation_speed)
@@ -56,7 +56,7 @@ class MotorWrapper:
                 self.right_motor.backward(self._current_right_command_value)
 
     def callback_left_wheel(self, msg: Float64):
-        rospy.loginfo("left")
+        rospy.logdebug("left")
         self._current_left_rotation_speed = self.normalize_rotation_speed(msg.data)
         self._current_left_command_value = self.convert_rotation_to_pwm(self._current_left_rotation_speed)
         self.pub_left_wheel.publish(self._current_left_rotation_speed)

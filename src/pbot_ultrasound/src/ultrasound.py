@@ -46,10 +46,10 @@ class Ultrasound:
             distance = self.request_distance()
             while int(distance) == -1:
                 distance = self.request_distance()
-                rospy.loginfo("Tdistance is %f", distance)
+                rospy.logdebug("Tdistance is %f", distance)
             while int(distance) >= 500 or int(distance) == 0:
                 distance = self.request_distance()
-                rospy.loginfo("Edistance is %f", distance)
+                rospy.logdebug("Edistance is %f", distance)
             distance_array.append(distance)
             num = num + 1
             time.sleep(0.01)
@@ -58,5 +58,5 @@ class Ultrasound:
         max_dist = max(distance_array)
         avg_dist = sum(distance_array) / len(distance_array)
 
-        rospy.loginfo("distance is %f", avg_dist)
+        rospy.logdebug("distance is %f", avg_dist)
         return min_dist, max_dist, avg_dist

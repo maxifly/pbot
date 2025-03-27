@@ -40,7 +40,7 @@ class UltrasoundWrapper:
         rate = rospy.Rate(5)
 
         while self._ultrasound_on:
-            rospy.loginfo("Calculate distance")
+            rospy.logdebug("Calculate distance")
 
 
             min_dist, max_dist, avg_dist = self.ultrasound.distance_test()
