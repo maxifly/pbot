@@ -1,4 +1,9 @@
 <launch>
+
+  <arg name="model" default="$(find pbot_description)/urdf/pbot.xacro" />
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
+
   
   <node pkg="pbot_beeper" type="beeper_subscriber.py" name="beeper" output="screen">
   </node>
@@ -23,6 +28,8 @@
 
   <node pkg="pbot_joy_converter" type="joy_converter.py" name="pbot_joy_converter" output="screen">
   </node>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
   <rosparam file="$(find pbot_base)/config/foxglove_config.yaml" command="load" />
   <node pkg="foxglove_bridge" type="foxglove_bridge" name="foxglove_bridge"

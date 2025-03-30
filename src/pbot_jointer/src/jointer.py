@@ -35,7 +35,7 @@ class AllJointsState:
         self.current_right_rotation_speed = msg.data
 
     def callback_left_wheel(self, msg: Float64):
-        self.current_left_rotation_speed = msg.data
+        self.current_left_rotation_speed = -1.0 * msg.data
 
 
 def joint_state_publisher(all_joints: AllJointsState):
@@ -70,6 +70,8 @@ def joint_state_publisher(all_joints: AllJointsState):
 
         # Обновляем время
         prev_time = current_time
+
+        joint_state.header.stamp = current_time
 
         # Публикуем сообщение
         pub.publish(joint_state)
