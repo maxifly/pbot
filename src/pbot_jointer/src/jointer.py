@@ -44,7 +44,7 @@ def joint_state_publisher(all_joints: AllJointsState):
 
     # Инициализация сообщения JointState
     joint_state = JointState()
-    joint_state.name = ['pbot_lf_w', 'pbot_lr_w', 'pbot_rf_w', 'pbot_rr_w']
+    joint_state.name = ['pbot_lf_w_to_base', 'pbot_lr_w_to_base', 'pbot_rf_w_to_base', 'pbot_rr_w_to_base']
     joint_state.position = [0.0, 0.0, 0.0, 0.0]
     joint_state.velocity = [0.0, 0.0, 0.0, 0.0]
     joint_state.effort = [0.0, 0.0, 0.0, 0.0]
