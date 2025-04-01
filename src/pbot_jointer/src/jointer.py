@@ -2,12 +2,21 @@
 import math
 
 import rospy
+from nav_msgs.msg import Odometry
 from rospy import Time
 from std_msgs.msg import Float64
 from sensor_msgs.msg import JointState
+import tf
 import threading
 
 ANGLE_LIMIT = 2 * math.pi
+
+# TODO Поменять
+wheel_radius = rospy.get_param('~wheel_radius', 0.1)  # Радиус колеса в метрах
+wheel_separation_length = rospy.get_param('~wheel_separation_length',
+                                          0.5)  # Расстояние между левыми и правыми колёсами в метрах
+wheel_separation_width = rospy.get_param('~wheel_separation_width',
+                                         0.3)  # Расстояние между передними и задними колёсами в метрах
 
 
 class AllJointsState:
@@ -28,6 +37,13 @@ class AllStateContext:
         self.prev_time = rospy.Time.now()
         self.left_position = 0.0
         self.right_position = 0.0
+
+        self.x = 0.0
+        self.y = 0.0
+        self.th = 0.0
+
+        self.v_left = 0.0
+        self.v_right = 0.0
 
 
 def create_wheel_joint_state(all_joints: AllJointsState, context: AllStateContext, current_time: Time) -> JointState:
@@ -57,15 +73,80 @@ def create_wheel_joint_state(all_joints: AllJointsState, context: AllStateContex
     return context.wheel_joint
 
 
-def joint_state_publisher(all_joints: AllJointsState, context: AllStateContext):
+def odometry_state(all_joints: AllJointsState, context: AllStateContext, current_time: Time) -> Odometry:
+    while not rospy.is_shutdown():
+        dt = (current_time - context.prev_time).to_sec()
+
+        # Вычисление линейной и угловой скорости
+        linear_velocity = wheel_radius * (context.v_right + context.v_left) / 2.0
+        angular_velocity = wheel_radius * (context.v_right - context.v_left) / wheel_separation_length
+
+        # Обновление позиции
+        delta_x = linear_velocity * math.cos(context.th) * dt
+        delta_y = linear_velocity * math.sin(context.th) * dt
+        delta_th = angular_velocity * dt
+
+        context.x += delta_x
+        context.y += delta_y
+        context.th += delta_th
+
+        # Создание сообщения Odometry
+        odom = Odometry()
+        odom.header.stamp = current_time
+        odom.header.frame_id = "odom"
+        odom.child_frame_id = "base_link"
+
+        # Позиция
+        odom.pose.pose.position.x = context.x
+        odom.pose.pose.position.y = context.y
+        odom.pose.pose.position.z = 0.0
+        odom.pose.pose.orientation = tf.transformations.quaternion_from_euler(0, 0, context.th)
+
+        # Скорость
+        odom.twist.twist.linear.x = linear_velocity
+        odom.twist.twist.angular.z = angular_velocity
+
+        # Ковариации (настройте в зависимости от точности)
+        odom.pose.covariance = [1e-3, 0, 0, 0, 0, 0,
+                                0, 1e-3, 0, 0, 0, 0,
+                                0, 0, 1e6, 0, 0, 0,
+                                0, 0, 0, 1e6, 0, 0,
+                                0, 0, 0, 0, 1e6, 0,
+                                0, 0, 0, 0, 0, 1e-2]
+        odom.twist.covariance = [1e-3, 0, 0, 0, 0, 0,
+                                 0, 1e-3, 0, 0, 0, 0,
+                                 0, 0, 1e6, 0, 0, 0,
+                                 0, 0, 0, 1e6, 0, 0,
+                                 0, 0, 0, 0, 1e6, 0,
+                                 0, 0, 0, 0, 0, 1e-2]
+
+        # Публикация одометрии
+        return odom
+
+
+def joint_state_publisher(all_joints: AllJointsState):
     pub_joint = rospy.Publisher('/joint_states', JointState, queue_size=10)
+    pub_odom = rospy.Publisher('/odom', Odometry, queue_size=10)
+    br = tf.TransformBroadcaster()
+
     rate = rospy.Rate(10)  # 10 Hz
+    context = AllStateContext()
 
     while not rospy.is_shutdown():
         current_time = rospy.Time.now()
         wheel_joint_state = create_wheel_joint_state(all_joints, context, current_time)
+        odom = odometry_state(all_joints, context, current_time)
         context.prev_time = current_time
+
+        # Публикация TF
+        br.sendTransform((context.x, context.y, 0),
+                         tf.transformations.quaternion_from_euler(0, 0, context.th),
+                         current_time,
+                         "base_link",
+                         "odom")
+        
         pub_joint.publish(wheel_joint_state)
+        pub_odom.publish(odom)
         rate.sleep()
 
 
