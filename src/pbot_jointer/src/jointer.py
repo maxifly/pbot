@@ -3,6 +3,7 @@ import math
 
 import rospy
 from nav_msgs.msg import Odometry
+from geometry_msgs.msg import Point, Quaternion, Pose, Twist, Vector3
 from rospy import Time
 from std_msgs.msg import Float64
 from sensor_msgs.msg import JointState
@@ -97,14 +98,21 @@ def odometry_state(all_joints: AllJointsState, context: AllStateContext, current
         odom.child_frame_id = "base_link"
 
         # Позиция
-        odom.pose.pose.position.x = context.x
-        odom.pose.pose.position.y = context.y
-        odom.pose.pose.position.z = 0.0
-        odom.pose.pose.orientation = tf.transformations.quaternion_from_euler(0, 0, context.th)
+        # odom.pose.pose.position.x = context.x
+        # odom.pose.pose.position.y = context.y
+        # odom.pose.pose.position.z = 0.0
+        # odom.pose.pose.orientation = tf.transformations.quaternion_from_euler(0, 0, context.th)
 
         # Скорость
-        odom.twist.twist.linear.x = linear_velocity
-        odom.twist.twist.angular.z = angular_velocity
+        # odom.twist.twist.linear.x = linear_velocity
+        # odom.twist.twist.angular.z = angular_velocity
+
+        # Позиция
+        odom.pose.pose = Pose(Point(context.x, context.y, 0.0),
+                              Quaternion(*tf.transformations.quaternion_from_euler(0, 0, context.th)))
+
+        # Заполнение скорости
+        odom.twist.twist = Twist(Vector3(linear_velocity, 0, 0), Vector3(0, 0, angular_velocity))
 
         # Ковариации (настройте в зависимости от точности)
         odom.pose.covariance = [1e-3, 0, 0, 0, 0, 0,
