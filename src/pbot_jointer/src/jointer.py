@@ -13,11 +13,12 @@ import threading
 ANGLE_LIMIT = 2 * math.pi
 
 # TODO Поменять
-wheel_radius = rospy.get_param('~wheel_radius', 0.1)  # Радиус колеса в метрах
-wheel_separation_length = rospy.get_param('~wheel_separation_length',
-                                          0.5)  # Расстояние между левыми и правыми колёсами в метрах
-wheel_separation_width = rospy.get_param('~wheel_separation_width',
-                                         0.3)  # Расстояние между передними и задними колёсами в метрах
+# Радиус колеса в метрах
+wheel_radius = 0.0335
+# Расстояние между левыми и правыми колёсами в метрах
+wheel_separation_length = 0.137
+# Расстояние между передними и задними колёсами в метрах
+wheel_separation_width = 0.121
 
 
 class AllJointsState:
@@ -43,8 +44,8 @@ class AllStateContext:
         self.y = 0.0
         self.th = 0.0
 
-        self.v_left = 0.0
-        self.v_right = 0.0
+        # self.v_left = 0.0
+        # self.v_right = 0.0
 
 
 def create_wheel_joint_state(all_joints: AllJointsState, context: AllStateContext, current_time: Time) -> JointState:
@@ -79,8 +80,8 @@ def odometry_state(all_joints: AllJointsState, context: AllStateContext, current
         dt = (current_time - context.prev_time).to_sec()
 
         # Вычисление линейной и угловой скорости
-        linear_velocity = wheel_radius * (context.v_right + context.v_left) / 2.0
-        angular_velocity = wheel_radius * (context.v_right - context.v_left) / wheel_separation_length
+        linear_velocity = wheel_radius * (all_joints.current_right_rotation_speed + all_joints.current_left_rotation_speed) / 2.0
+        angular_velocity = wheel_radius * (all_joints.current_right_rotation_speed - all_joints.current_left_rotation_speed) / wheel_separation_length
 
         # Обновление позиции
         delta_x = linear_velocity * math.cos(context.th) * dt
@@ -152,7 +153,7 @@ def joint_state_publisher(all_joints: AllJointsState):
                          current_time,
                          "base_link",
                          "odom")
-        
+
         pub_joint.publish(wheel_joint_state)
         pub_odom.publish(odom)
         rate.sleep()
