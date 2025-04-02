@@ -6,6 +6,16 @@
     <xacro:include filename="$(find pbot_description)/urdf/pbot_materials.xacro"/>
     <xacro:property name="clearance" value="0.043" />
 
+    <!-- base_link -->
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius="0.001"/>
+            </geometry>
+        </visual>
+    </link>
+
     <!-- base_footprint -->
     <link name="base_footprint">
         <visual>
@@ -16,21 +26,14 @@
             <material name="Blue" />
         </visual>
     </link>
-    <joint name="base_footprint_to_base_link" type="fixed">
-        <origin xyz="0 0 ${clearance}" rpy="0 0 0" />
-        <parent link="base_footprint" />
-        <child link="base_link" />
+
+    <joint name="base_link_to_base_footprint" type="fixed">
+        <origin xyz="0 0 -${clearance}" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="base_footprint" />
     </joint>
 
-    <!-- base_link -->
-    <link name="base_link">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <sphere radius="0.001"/>
-            </geometry>
-        </visual>
-    </link>
+
     <joint name="base_link_to_pbot_base" type="fixed">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <parent link="base_link"/>
