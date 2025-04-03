@@ -50,9 +50,10 @@ class AllStateContext:
 
 def create_wheel_joint_state(all_joints: AllJointsState, context: AllStateContext, current_time: Time) -> JointState:
     delta_t = (current_time - context.prev_time).to_sec()
+    l_velocity = -1.0 * all_joints.current_left_rotation_speed
 
     right_position_delta = all_joints.current_right_rotation_speed * delta_t
-    left_position_delta = all_joints.current_left_rotation_speed * delta_t
+    left_position_delta = l_velocity * delta_t
 
     context.left_position += left_position_delta
     context.right_position += right_position_delta
@@ -66,7 +67,7 @@ def create_wheel_joint_state(all_joints: AllJointsState, context: AllStateContex
     context.wheel_joint.position[3] = context.right_position
 
     # Обновляем скорость
-    context.wheel_joint.velocity = [all_joints.current_left_rotation_speed, all_joints.current_left_rotation_speed,
+    context.wheel_joint.velocity = [l_velocity, l_velocity,
                                     all_joints.current_right_rotation_speed, all_joints.current_right_rotation_speed]
 
     # Обновляем время
@@ -164,7 +165,7 @@ def velocity_subscriber(all_joints: AllJointsState):
         all_joints.current_right_rotation_speed = msg.data
 
     def left_velocity_callback(msg):
-        all_joints.current_left_rotation_speed = -1.0 * msg.data
+        all_joints.current_left_rotation_speed = msg.data
 
     rospy.Subscriber("/pbot/right_wheel/current_velocity", Float64, right_velocity_callback)
     rospy.Subscriber("/pbot/left_wheel/current_velocity", Float64, left_velocity_callback)
