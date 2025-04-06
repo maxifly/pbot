@@ -5,13 +5,13 @@
     <link name="pbot_ultrasonic">
         <visual>
             <geometry>
-                <box size="0.01 0.01 0.02"/>
+                <box size="0.01 0.045 0.02 "/>
             </geometry>
             <material name="Red"/>
         </visual>
         <collision>
             <geometry>
-                <box size="0.01 0.045 0.02"/>
+                <box size="0.01 0.045 0.02 "/>
             </geometry>
         </collision>
         <inertial>
@@ -24,7 +24,7 @@
     <joint name="pbot_ultrasonic_base" type="fixed">
         <parent link="base_link"/>
         <child link="pbot_ultrasonic"/>
-        <origin xyz="0.12 0 0.02" rpy="0 0 0"/> <!-- Позиция и ориентация датчика -->
+        <origin xyz="0.10 0 0.02" rpy="0 0 0"/> <!-- Позиция и ориентация датчика -->
     </joint>
 
     <!-- Определение датчика без плагина Gazebo -->
