@@ -81,6 +81,8 @@
         </collision>
     </link>
 
+    <!-- Ultrasound -->
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_ultrasound.xacro" />
     <!-- Wheels -->
     <xacro:include filename="$(find pbot_description)/urdf/pbot_rf_w.xacro" />
     <xacro:include filename="$(find pbot_description)/urdf/pbot_rr_w.xacro" />

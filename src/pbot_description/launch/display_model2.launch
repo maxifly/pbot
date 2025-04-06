@@ -1,0 +1,12 @@
+<launch>
+    <!-- Args -->
+    <arg name="gui" default="true" />
+    <arg name="model" default="$(find pbot_description)/urdf/pbot.xacro" />
+    <arg name="rvizconfig" default="$(find pbot_description)/rviz/pbot_model.rviz" />
+    <!-- Params -->
+    <!-- Robot Description from URDF -->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    <!-- Rviz -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="false"/>
+</launch>
