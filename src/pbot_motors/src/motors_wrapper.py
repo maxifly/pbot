@@ -5,11 +5,13 @@ import dif_wheels
 import rospy
 from std_msgs.msg import Float64
 from geometry_msgs.msg import Twist
+from sensor_msgs.msg import Range
 import time
 
 rad2pwm_k = 0.044
 max_radian_speed = 100 * rad2pwm_k
 min_radian_speed = -100 * rad2pwm_k
+min_range_bound = 0.2
 
 
 class MotorWrapper:
@@ -22,11 +24,13 @@ class MotorWrapper:
         self._current_left_command_value = 0
         self._current_cmd_x_speed = 0.
         self._current_cmd_z_angular_speed = 0.
+        self._range = 100.
 
         rospy.init_node('pbot_motors')
         rospy.Subscriber("/pbot/right_wheel/target_velocity", Float64, self.callback_right_wheel)
         rospy.Subscriber("/pbot/left_wheel/target_velocity", Float64, self.callback_left_wheel)
         rospy.Subscriber("/pbot/cmd_vel", Twist, self.callback_cmd_vel)
+        rospy.Subscriber('/pbot/range', Range, self.callback_range)
 
         self.pub_right_wheel = rospy.Publisher("/pbot/right_wheel/current_velocity", Float64, queue_size=10)
         self.pub_left_wheel = rospy.Publisher("/pbot/left_wheel/current_velocity", Float64, queue_size=10)
@@ -40,6 +44,9 @@ class MotorWrapper:
         self.right_motor.cleanup()
         del self.left_motor
         del self.right_motor
+
+    def callback_range(self, msg: Range):
+        self._range = msg.range
 
     def callback_right_wheel(self, msg: Float64):
         rospy.logdebug("right")
@@ -84,11 +91,14 @@ class MotorWrapper:
         # Speed in radian
         # if -24.9 < speed < 24.9:
         #     return 0.0
+        result = speed
         if speed < min_radian_speed:
-            return min_radian_speed
+            result = min_radian_speed
         if speed > max_radian_speed:
-            return max_radian_speed
-        return speed
+            result =  max_radian_speed
+        if self._range < min_range_bound and result > 0.0:
+            result = 0.0
+        return result
 
     def convert_rotation_to_pwm(self, speed):
         return int(speed / rad2pwm_k)

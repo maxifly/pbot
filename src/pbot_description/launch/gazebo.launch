@@ -6,13 +6,11 @@
 
     <!-- Загрузка URDF в параметр robot_description -->
     <param name="robot_description" command="$(find xacro)/xacro $(find pbot_description)/urdf/pbot.xacro" />
+    <param name="use_sim_time" value="true" />
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
     <!-- Запуск узла для спавна модели в Gazebo -->
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model my_robot" />
 
-    <!-- Запуск контроллера дифференциального привода -->
-    <node name="controller_spawner" pkg="controller_manager" type="spawner" args="diff_drive_controller --namespace=/my_robot" />
-
-    <!-- Запуск узла для публикации одометрии -->
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 </launch>

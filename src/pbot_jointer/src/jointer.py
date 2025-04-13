@@ -162,10 +162,10 @@ def joint_state_publisher(all_joints: AllJointsState):
 
 def velocity_subscriber(all_joints: AllJointsState):
     def right_velocity_callback(msg):
-        all_joints.current_right_rotation_speed = msg.data
+        all_joints.current_right_rotation_speed = msg.data * 12.8
 
     def left_velocity_callback(msg):
-        all_joints.current_left_rotation_speed = msg.data
+        all_joints.current_left_rotation_speed = msg.data * 12.8
 
     rospy.Subscriber("/pbot/right_wheel/current_velocity", Float64, right_velocity_callback)
     rospy.Subscriber("/pbot/left_wheel/current_velocity", Float64, left_velocity_callback)

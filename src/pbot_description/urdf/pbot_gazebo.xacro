@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <gazebo reference="base_link">
+        <material>Gazebo/Green</material>
+    </gazebo>
+
+    <gazebo reference="pbot_lf_w">
+        <material>Gazebo/Green</material>
+    </gazebo>
+
+    <gazebo reference="pbot_lr_w">
+        <material>Gazebo/Green</material>
+    </gazebo>
+
+    <gazebo reference="pbot_rf_w">
+        <material>Gazebo/Green</material>
+    </gazebo>
+
+    <gazebo reference="pbot_rr_w">
+        <material>Gazebo/Green</material>
+    </gazebo>
+
+<gazebo>
+    <plugin name="gazebo_ros_joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+        <update_rate>20</update_rate>
+        <jointName>pbot_rf_w_to_base, pbot_rr_w_to_base, pbot_lf_w_to_base, pbot_lr_w_to_base</jointName>
+<!--        <jointName>pbot_rr_w_to_base</jointName>-->
+<!--        <jointName>pbot_lf_w_to_base</jointName>-->
+<!--        <jointName>pbot_lr_w_to_base</jointName>-->
+    </plugin>
+</gazebo>
+<!--    -->
+<!--  <gazebo>-->
+<!--    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">-->
+<!--      <robotNamespace>/</robotNamespace>-->
+<!--    </plugin>-->
+<!--  </gazebo>-->
+<!--    <gazebo>-->
+<!--        <plugin name="gazebo_ros_joint_state_publisher"-->
+<!--            filename="libgazebo_ros_joint_state_publisher.so">-->
+<!--            <update_rate>20</update_rate>-->
+<!--            <joint_name>pbot_lf_w_to_base</joint_name>-->
+<!--            <joint_name>pbot_lr_w_to_base</joint_name>-->
+<!--            <joint_name>pbot_rf_w_to_base</joint_name>-->
+<!--            <joint_name>pbot_rr_w_to_base</joint_name>-->
+<!--        </plugin>-->
+<!--    </gazebo>-->
+
+
+</robot>

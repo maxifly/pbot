@@ -4,7 +4,7 @@
         name="pbot">
     <!-- Matherials -->
     <xacro:include filename="$(find pbot_description)/urdf/pbot_materials.xacro"/>
-    <xacro:property name="clearance" value="0.043" />
+    <xacro:property name="clearance" value="0.043"/>
 
     <!-- base_link -->
     <link name="base_link">
@@ -14,23 +14,37 @@
                 <sphere radius="0.001"/>
             </geometry>
         </visual>
+        <inertial>
+            <origin
+                    xyz="-0.0126793836830341 4.44350410814448E-10 -0.00681296059112218"
+                    rpy="0 0 0"/>
+            <mass
+                    value="0.28831638977324"/>
+            <inertia
+                    ixx="0.000131169085410887"
+                    ixy="-4.3600054751417E-15"
+                    ixz="9.31897878301522E-06"
+                    iyy="0.000567748496773017"
+                    iyz="-9.53741865535676E-15"
+                    izz="0.000682526229970573"/>
+        </inertial>
     </link>
 
     <!-- base_footprint -->
     <link name="base_footprint">
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 0" />
+            <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <cylinder length="0.001" radius="0.110" />
+                <cylinder length="0.001" radius="0.110"/>
             </geometry>
-            <material name="Blue" />
+            <material name="Blue"/>
         </visual>
     </link>
 
     <joint name="base_link_to_base_footprint" type="fixed">
-        <origin xyz="0 0 -${clearance}" rpy="0 0 0" />
-        <parent link="base_link" />
-        <child link="base_footprint" />
+        <origin xyz="0 0 -${clearance}" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="base_footprint"/>
     </joint>
 
 
@@ -82,10 +96,13 @@
     </link>
 
     <!-- Ultrasound -->
-    <xacro:include filename="$(find pbot_description)/urdf/pbot_ultrasound.xacro" />
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_ultrasound.xacro"/>
     <!-- Wheels -->
-    <xacro:include filename="$(find pbot_description)/urdf/pbot_rf_w.xacro" />
-    <xacro:include filename="$(find pbot_description)/urdf/pbot_rr_w.xacro" />
-    <xacro:include filename="$(find pbot_description)/urdf/pbot_lf_w.xacro" />
-    <xacro:include filename="$(find pbot_description)/urdf/pbot_lr_w.xacro" />
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_rf_w.xacro"/>
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_rr_w.xacro"/>
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_lf_w.xacro"/>
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_lr_w.xacro"/>
+
+    <!-- Gazebo -->
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_gazebo.xacro"/>
 </robot>
