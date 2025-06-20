@@ -95,6 +95,8 @@
         </collision>
     </link>
 
+    <!-- Lidar -->
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_lidar.xacro"/>
     <!-- Ultrasound -->
     <xacro:include filename="$(find pbot_description)/urdf/pbot_ultrasound.xacro"/>
     <!-- Wheels -->
