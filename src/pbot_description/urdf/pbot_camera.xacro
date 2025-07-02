@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot
+        xmlns:xacro="http://www.ros.org/wiki/xacro"
+        name="pbot">
+
+
+    <link
+            name="pbot_camera_h">
+        <inertial>
+            <origin
+                    xyz="-0.00442120427949036 1.89949483748387E-05 -0.00284622380073214"
+                    rpy="0 0 0"/>
+            <mass
+                    value="0.107749250099924"/>
+            <inertia
+                    ixx="1.66906472405085E-05"
+                    ixy="2.34004269563963E-09"
+                    ixz="-2.00817695580187E-06"
+                    iyy="1.72352983259005E-05"
+                    iyz="8.62778612342202E-09"
+                    izz="2.41544637259914E-05"/>
+        </inertial>
+        <visual>
+            <origin
+                    xyz="0 0 0"
+                    rpy="0 0 0"/>
+            <geometry>
+                <mesh
+                        filename="package://pbot_description/meshes/pbot_camera_h.STL"/>
+            </geometry>
+            <material name="Blue"/>
+        </visual>
+        <collision>
+            <origin
+                    xyz="0 0 0"
+                    rpy="0 0 0"/>
+            <geometry>
+                <mesh
+                        filename="package://pbot_description/meshes/pbot_camera_h.STL"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint
+            name="camera_h_to_base"
+            type="continuous">
+        <origin
+                xyz="0.069451 8.5741E-05 0.057354"
+                rpy="0 0.016609 0"/>
+        <parent
+                link="pbot_base"/>
+        <child
+                link="pbot_camera_h"/>
+        <axis
+                xyz="0 0 -1"/>
+    </joint>
+    <link
+            name="pbot_camera_v">
+        <inertial>
+            <origin
+                    xyz="0.00666977708243387 -0.0144960911947171 0.0135514367296394"
+                    rpy="0 0 0"/>
+            <mass
+                    value="0.0237451656745337"/>
+            <inertia
+                    ixx="3.58294133330356E-06"
+                    ixy="1.26129462744684E-09"
+                    ixz="-7.07892718500619E-07"
+                    iyy="3.26994433858154E-06"
+                    iyz="7.33327247126989E-10"
+                    izz="2.88968628542964E-06"/>
+        </inertial>
+        <visual>
+            <origin
+                    xyz="0 0 0"
+                    rpy="0 0 0"/>
+            <geometry>
+                <mesh
+                        filename="package://pbot_description/meshes/pbot_camera_v.STL"/>
+            </geometry>
+            <material name="Yellow"/>
+        </visual>
+        <collision>
+            <origin
+                    xyz="0 0 0"
+                    rpy="0 0 0"/>
+            <geometry>
+                <mesh
+                        filename="package://pbot_description/meshes/pbot_camera_v.STL"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint
+            name="camera_v_to_camera_h"
+            type="continuous">
+        <origin
+                xyz="0.016051 0.014031 0.0145"
+                rpy="0 0 -0.0042963"/>
+        <parent
+                link="pbot_camera_h"/>
+        <child
+                link="pbot_camera_v"/>
+        <axis
+                xyz="0 -1 0"/>
+    </joint>
+
+</robot>

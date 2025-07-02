@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="pmubot_assembly2">
+  <link
+    name="pbot_base">
+    <inertial>
+      <origin
+        xyz="-0.000212194447663593 -0.00144799416234487 0.0371639151331253"
+        rpy="0 0 0" />
+      <mass
+        value="0.888052161793351" />
+      <inertia
+        ixx="0.000531263296561005"
+        ixy="-3.65215923450924E-07"
+        ixz="1.61778679682901E-05"
+        iyy="0.00115013165869859"
+        iyz="-1.80237443214602E-08"
+        izz="0.00163705290551028" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_base.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.698039215686274 0.698039215686274 0.698039215686274 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_base.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="pbot_rf_w">
+    <inertial>
+      <origin
+        xyz="7.04405284102094E-11 0.000279731374778269 4.45704893131671E-10"
+        rpy="0 0 0" />
+      <mass
+        value="0.0302375584217029" />
+      <inertia
+        ixx="1.15702195640707E-05"
+        ixy="-7.57166982825314E-15"
+        ixz="-3.01407530521655E-14"
+        iyy="1.96090962980717E-05"
+        iyz="-1.06124677525427E-13"
+        izz="1.15702201303152E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_rf_w.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_rf_w.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="pbot_rf_w_to_base"
+    type="continuous">
+    <origin
+      xyz="0.0470881159981717 -0.0705 -0.0132839044168557"
+      rpy="0 0.016609457820692 0" />
+    <parent
+      link="pbot_base" />
+    <child
+      link="pbot_rf_w" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="pbot_rr_w">
+    <inertial>
+      <origin
+        xyz="5.38798686222641E-10 0.000279731333118954 5.40715007490977E-10"
+        rpy="0 0 0" />
+      <mass
+        value="0.0302375580628956" />
+      <inertia
+        ixx="1.15702196703268E-05"
+        ixy="-1.3444926848086E-13"
+        ixz="-3.648973998551E-14"
+        iyy="1.96090960765893E-05"
+        iyz="-1.23593703580994E-13"
+        izz="1.1570219796082E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_rr_w.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_rr_w.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="pbot_rr_w_to_base"
+    type="continuous">
+    <origin
+      xyz="-0.0728953319370115 -0.0705 -0.0112908611194895"
+      rpy="0 0.0166094578206924 0" />
+    <parent
+      link="pbot_base" />
+    <child
+      link="pbot_rr_w" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="pbot_lf_w">
+    <inertial>
+      <origin
+        xyz="2.20207470313927E-10 -0.000279731201700426 -2.02053760875454E-10"
+        rpy="0 0 0" />
+      <mass
+        value="0.0302375576064607" />
+      <inertia
+        ixx="1.15702197035643E-05"
+        ixy="5.8788148071093E-14"
+        ixz="1.10485744750902E-14"
+        iyy="1.96090957656786E-05"
+        iyz="-6.70315487762859E-14"
+        izz="1.15702193827656E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_lf_w.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_lf_w.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="pbot_lf_w_to_base"
+    type="continuous">
+    <origin
+      xyz="0.0470881159981717 0.0705 -0.0132839044168557"
+      rpy="0 0.0166094578206922 0" />
+    <parent
+      link="pbot_base" />
+    <child
+      link="pbot_lf_w" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+  <link
+    name="pbot_lr_w">
+    <inertial>
+      <origin
+        xyz="3.29489630024327E-11 -0.0002797313481048 -1.85563862886706E-10"
+        rpy="0 0 0" />
+      <mass
+        value="0.0302375580133055" />
+      <inertia
+        ixx="1.15702196840428E-05"
+        ixy="-2.03000475402312E-14"
+        ixz="1.06746870190032E-13"
+        iyy="1.96090960377303E-05"
+        iyz="-5.58321083325077E-14"
+        izz="1.15702197584358E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_lr_w.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_lr_w.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="pbot_lr_w_to_base"
+    type="continuous">
+    <origin
+      xyz="-0.0728953319370116 0.0705 -0.0112908611194895"
+      rpy="0 0.0166094578206921 0" />
+    <parent
+      link="pbot_base" />
+    <child
+      link="pbot_lr_w" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+  <link
+    name="pbot_sonar">
+    <inertial>
+      <origin
+        xyz="0.00254491682770949 -4.23266584576622E-18 -0.00442304839537571"
+        rpy="0 0 0" />
+      <mass
+        value="0.0495110191487618" />
+      <inertia
+        ixx="1.03481074988365E-05"
+        ixy="-1.48112545695529E-21"
+        ixz="2.35878891442608E-07"
+        iyy="3.04932164399552E-06"
+        iyz="1.63262731511754E-21"
+        izz="9.79795359146923E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_sonar.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_sonar.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="sonar_to_base"
+    type="fixed">
+    <origin
+      xyz="0.1048 0 0.023015"
+      rpy="0 0.016609 0" />
+    <parent
+      link="pbot_base" />
+    <child
+      link="pbot_sonar" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="pbot_camera_h">
+    <inertial>
+      <origin
+        xyz="-0.00442120427949036 1.89949483748387E-05 -0.00284622380073214"
+        rpy="0 0 0" />
+      <mass
+        value="0.107749250099924" />
+      <inertia
+        ixx="1.66906472405085E-05"
+        ixy="2.34004269563963E-09"
+        ixz="-2.00817695580187E-06"
+        iyy="1.72352983259005E-05"
+        iyz="8.62778612342202E-09"
+        izz="2.41544637259914E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_camera_h.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_camera_h.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camera_h_to_base"
+    type="continuous">
+    <origin
+      xyz="0.069451 8.5741E-05 0.057354"
+      rpy="0 0.016609 0" />
+    <parent
+      link="pbot_base" />
+    <child
+      link="pbot_camera_h" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="pbot_camera_v">
+    <inertial>
+      <origin
+        xyz="0.00666977708243387 -0.0144960911947171 0.0135514367296394"
+        rpy="0 0 0" />
+      <mass
+        value="0.0237451656745337" />
+      <inertia
+        ixx="3.58294133330356E-06"
+        ixy="1.26129462744684E-09"
+        ixz="-7.07892718500619E-07"
+        iyy="3.26994433858154E-06"
+        iyz="7.33327247126989E-10"
+        izz="2.88968628542964E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_camera_v.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.776470588235294 0.756862745098039 0.737254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/pbot_camera_v.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camera_v_to_camera_h"
+    type="continuous">
+    <origin
+      xyz="0.016051 0.014031 0.0145"
+      rpy="0 0 -0.0042963" />
+    <parent
+      link="pbot_camera_h" />
+    <child
+      link="pbot_camera_v" />
+    <axis
+      xyz="0 -1 0" />
+  </joint>
+  <link
+    name="laser_frame">
+    <inertial>
+      <origin
+        xyz="0.00208191942450915 3.89951965604511E-18 -0.00385299208880718"
+        rpy="0 0 0" />
+      <mass
+        value="0.968613348864224" />
+      <inertia
+        ixx="0.000334583006933795"
+        ixy="-5.33407128608831E-20"
+        ixz="1.81257759360738E-21"
+        iyy="0.000411095059912044"
+        iyz="-3.2970666661773E-21"
+        izz="0.000675110546906932" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/laser_frame.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://pmubot_assembly2/meshes/laser_frame.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="laser_joint"
+    type="fixed">
+    <origin
+      xyz="0.0039648 0 0.12415"
+      rpy="0 -0.016609 3.1416" />
+    <parent
+      link="pbot_base" />
+    <child
+      link="laser_frame" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>

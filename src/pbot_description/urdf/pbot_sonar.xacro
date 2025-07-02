@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot
+        xmlns:xacro="http://www.ros.org/wiki/xacro"
+        name="pbot">
+    <link
+            name="pbot_sonar">
+        <inertial>
+            <origin
+                    xyz="0.00254491682770949 -3.66799406865457E-18 -0.00442304839537571"
+                    rpy="0 0 0"/>
+            <mass
+                    value="0.0495110191487618"/>
+            <inertia
+                    ixx="1.03481074988365E-05"
+                    ixy="-1.43971637317523E-21"
+                    ixz="2.35878891442608E-07"
+                    iyy="3.04932164399552E-06"
+                    iyz="1.70839196721133E-21"
+                    izz="9.79795359146923E-06"/>
+        </inertial>
+        <visual>
+            <origin
+                    xyz="0 0 0"
+                    rpy="0 0 0"/>
+            <geometry>
+                <mesh
+                        filename="package://pbot_description/meshes/pbot_sonar.STL"/>
+            </geometry>
+            <material name="Blue"/>
+        </visual>
+        <collision>
+            <origin
+                    xyz="0 0 0"
+                    rpy="0 0 0"/>
+            <geometry>
+                <mesh
+                        filename="package://pbot_description/meshes/pbot_sonar.STL"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint
+            name="sonar_to_base"
+            type="fixed">
+        <origin
+                xyz="0.1048 0 0.023015"
+                rpy="0 0.016609 0"/>
+        <parent
+                link="pbot_base"/>
+        <child
+                link="pbot_sonar"/>
+        <axis
+                xyz="0 0 0"/>
+    </joint>
+</robot>

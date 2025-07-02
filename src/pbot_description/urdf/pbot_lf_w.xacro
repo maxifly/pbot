@@ -2,22 +2,21 @@
 <robot
         xmlns:xacro="http://www.ros.org/wiki/xacro"
         name="pbot">
-
     <link
             name="pbot_lf_w">
         <inertial>
             <origin
-                    xyz="2.2904E-10 -0.00027973 -1.3045E-10"
+                    xyz="2.20207470313927E-10 -0.000279731201700426 -2.0205375914073E-10"
                     rpy="0 0 0"/>
             <mass
-                    value="0.030238"/>
+                    value="0.0302375576064607"/>
             <inertia
-                    ixx="1.157E-05"
-                    ixy="6.3103E-14"
-                    ixz="-1.9026E-14"
-                    iyy="1.9609E-05"
-                    iyz="-5.1829E-14"
-                    izz="1.157E-05"/>
+                    ixx="1.15702197035643E-05"
+                    ixy="5.87881486177672E-14"
+                    ixz="1.10485738589503E-14"
+                    iyy="1.96090957656786E-05"
+                    iyz="-6.70315528384273E-14"
+                    izz="1.15702193827656E-05"/>
         </inertial>
         <visual>
             <origin
@@ -43,8 +42,8 @@
             name="pbot_lf_w_to_base"
             type="continuous">
         <origin
-                xyz="0.045046 0.0705 -0.013263"
-                rpy="0 0.016895 0"/>
+                xyz="0.0470881159981717 0.0705 -0.0132839044168557"
+                rpy="0 0.0166094578206922 0"/>
         <parent
                 link="pbot_base"/>
         <child

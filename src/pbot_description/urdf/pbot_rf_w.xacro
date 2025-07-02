@@ -7,16 +7,16 @@
             name="pbot_rf_w">
         <inertial>
             <origin
-                    xyz="2.9058E-11 0.00027973 5.9298E-10"
+                    xyz="7.0441E-11 0.00027973 4.457E-10"
                     rpy="0 0 0"/>
             <mass
                     value="0.030238"/>
             <inertia
                     ixx="1.157E-05"
-                    ixy="7.6572E-15"
-                    ixz="-8.7242E-14"
+                    ixy="-7.5717E-15"
+                    ixz="-3.0141E-14"
                     iyy="1.9609E-05"
-                    iyz="-1.3863E-13"
+                    iyz="-1.0612E-13"
                     izz="1.157E-05"/>
         </inertial>
         <visual>
@@ -43,8 +43,8 @@
             name="pbot_rf_w_to_base"
             type="continuous">
         <origin
-                xyz="0.045046 -0.0705 -0.013263"
-                rpy="0 0.016895 0"/>
+                xyz="0.047088 -0.0705 -0.013284"
+                rpy="0 0.016609 0"/>
         <parent
                 link="pbot_base"/>
         <child
@@ -52,5 +52,4 @@
         <axis
                 xyz="0 1 0"/>
     </joint>
-
 </robot>

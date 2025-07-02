@@ -58,17 +58,17 @@
             name="pbot_base">
         <inertial>
             <origin
-                    xyz="-0.0126793836830341 4.44350410814448E-10 -0.00681296059112218"
+                    xyz="-0.00021219 -0.001448 0.037164"
                     rpy="0 0 0"/>
             <mass
-                    value="0.28831638977324"/>
+                    value="0.88805"/>
             <inertia
-                    ixx="0.000131169085410887"
-                    ixy="-4.3600054751417E-15"
-                    ixz="9.31897878301522E-06"
-                    iyy="0.000567748496773017"
-                    iyz="-9.53741865535676E-15"
-                    izz="0.000682526229970573"/>
+                    ixx="0.00053126"
+                    ixy="-3.6522E-07"
+                    ixz="1.6178E-05"
+                    iyy="0.0011501"
+                    iyz="-1.8024E-08"
+                    izz="0.0016371"/>
         </inertial>
         <visual>
             <origin
@@ -80,8 +80,8 @@
             </geometry>
             <material
                     name="White">
-                <!--                <color-->
-                <!--                        rgba="0.698039215686274 0.698039215686274 0.698039215686274 1"/>-->
+<!--                <color-->
+<!--                        rgba="0.69804 0.69804 0.69804 1"/>-->
             </material>
         </visual>
         <collision>
@@ -97,8 +97,13 @@
 
     <!-- Lidar -->
     <xacro:include filename="$(find pbot_description)/urdf/pbot_lidar.xacro"/>
+
     <!-- Ultrasound -->
-    <xacro:include filename="$(find pbot_description)/urdf/pbot_ultrasound.xacro"/>
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_sonar.xacro"/>
+
+    <!-- Camera -->
+    <xacro:include filename="$(find pbot_description)/urdf/pbot_camera.xacro"/>
+
     <!-- Wheels -->
     <xacro:include filename="$(find pbot_description)/urdf/pbot_rf_w.xacro"/>
     <xacro:include filename="$(find pbot_description)/urdf/pbot_rr_w.xacro"/>
