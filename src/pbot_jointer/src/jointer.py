@@ -9,6 +9,8 @@ from std_msgs.msg import Float64
 from sensor_msgs.msg import JointState
 import tf
 import threading
+from dynamic_reconfigure.server import Server
+from pbot_jointer.cfg import pbot_jointerConfig
 
 ANGLE_LIMIT = 2 * math.pi
 
@@ -20,6 +22,8 @@ wheel_separation_length = 0.137
 # Расстояние между передними и задними колёсами в метрах
 wheel_separation_width = 0.121
 
+param_movement_velocity_correction = 12.8
+param_turning_velocity_correction = 12.8
 
 class AllJointsState:
     def __init__(self):
@@ -30,10 +34,11 @@ class AllJointsState:
 class AllStateContext:
     def __init__(self):
         joint_state = JointState()
-        joint_state.name = ['pbot_lf_w_to_base', 'pbot_lr_w_to_base', 'pbot_rf_w_to_base', 'pbot_rr_w_to_base']
-        joint_state.position = [0.0, 0.0, 0.0, 0.0]
-        joint_state.velocity = [0.0, 0.0, 0.0, 0.0]
-        joint_state.effort = [0.0, 0.0, 0.0, 0.0]
+        joint_state.name = ['pbot_lf_w_to_base', 'pbot_lr_w_to_base', 'pbot_rf_w_to_base', 'pbot_rr_w_to_base',
+                            'camera_h_to_base', 'camera_v_to_camera_h']
+        joint_state.position = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        joint_state.velocity = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        joint_state.effort = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
         self.wheel_joint = joint_state
         self.prev_time = rospy.Time.now()
@@ -170,9 +175,30 @@ def velocity_subscriber(all_joints: AllJointsState):
     rospy.Subscriber("/pbot/right_wheel/current_velocity", Float64, right_velocity_callback)
     rospy.Subscriber("/pbot/left_wheel/current_velocity", Float64, left_velocity_callback)
 
+def config_callback(config, level):
+    global param_movement_velocity_correction, param_turning_velocity_correction
+
+    """
+    Обработчик обратного вызова для сервера динамической реконфигурации.
+
+    Args:
+        config (joy_to_twist_converter.cfg.JoyToTwistConfig): Новые значения конфигурации.
+        level (int): Уровень изменения конфигурации.
+    """
+
+    param_movement_velocity_correction = 12.8
+    param_turning_velocity_correction = 12.8
+
+    param_movement_velocity_correction = config.movement_velocity_correction
+    param_turning_velocity_correction = config.turning_velocity_correction
+    rospy.loginfo("Reconfigure request: movement_velocity_correction=%f, turning_velocity_correction=%f" % (
+        param_movement_velocity_correction, param_turning_velocity_correction))
+    return config
 
 def start():
     rospy.init_node('pbot_jointer')
+    srv = Server(pbot_jointerConfig, config_callback)
+
     joints = AllJointsState()
     # Запускаем подписчики в отдельном потоке
     threading.Thread(target=velocity_subscriber, args=(joints,)).start()
