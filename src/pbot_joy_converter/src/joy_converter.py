@@ -38,6 +38,7 @@ class JoyConverter:
         # Начальные значения ограничений
         self.max_linear_velocity = 0.5  # м/с
         self.max_angular_velocity = 1.0  # рад/с
+        self.turn_angular_velocity = 0.4  # рад/с
 
     def config_callback(self, config, level):
         """
@@ -50,8 +51,9 @@ class JoyConverter:
 
         self.max_linear_velocity = config.max_linear_velocity
         self.max_angular_velocity = config.max_angular_velocity
-        rospy.loginfo("Reconfigure request: max_linear_velocity=%f, max_angular_velocity=%f" % (
-            config.max_linear_velocity, config.max_angular_velocity))
+        self.turn_angular_velocity = config.turn_angular_velocity
+        rospy.loginfo("Reconfigure request: max_linear_velocity=%f, max_angular_velocity=%f, turn_angular_velocity=%f" % (
+            config.max_linear_velocity, config.max_angular_velocity, config.turn_angular_velocity))
         return config
 
     def joy_callback(self, data):
@@ -86,9 +88,9 @@ class JoyConverter:
             twist1 = Twist()
             twist1.linear.x = 0.
             if data.axes[2] < 0.:
-                twist1.angular.z = 0.15
+                twist1.angular.z = self.turn_angular_velocity
             else:
-                twist1.angular.z = -0.15
+                twist1.angular.z = -1.0 * self.turn_angular_velocity
                 
             self.twist_pub.publish(twist1)
 
