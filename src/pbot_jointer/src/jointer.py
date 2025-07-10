@@ -25,6 +25,7 @@ wheel_separation_width = 0.121
 param_movement_velocity_correction = 12.8
 param_turning_velocity_correction = 12.8
 
+
 class AllJointsState:
     def __init__(self):
         self.current_right_rotation_speed = 0.
@@ -86,8 +87,10 @@ def odometry_state(all_joints: AllJointsState, context: AllStateContext, current
         dt = (current_time - context.prev_time).to_sec()
 
         # Вычисление линейной и угловой скорости
-        linear_velocity = wheel_radius * (all_joints.current_right_rotation_speed + all_joints.current_left_rotation_speed) / 2.0
-        angular_velocity = wheel_radius * (all_joints.current_right_rotation_speed - all_joints.current_left_rotation_speed) / wheel_separation_length
+        linear_velocity = wheel_radius * (
+                    all_joints.current_right_rotation_speed + all_joints.current_left_rotation_speed) / 2.0
+        angular_velocity = wheel_radius * (
+                    all_joints.current_right_rotation_speed - all_joints.current_left_rotation_speed) / wheel_separation_length
 
         # Обновление позиции
         delta_x = linear_velocity * math.cos(context.th) * dt
@@ -166,14 +169,28 @@ def joint_state_publisher(all_joints: AllJointsState):
 
 
 def velocity_subscriber(all_joints: AllJointsState):
+    def is_turning(right_speed, left_speed):
+        return ((right_speed >= 0 and left_speed >= 0)
+                or (right_speed < 0 and left_speed < 0))
+
     def right_velocity_callback(msg):
-        all_joints.current_right_rotation_speed = msg.data * 12.8
+        global param_movement_velocity_correction, param_turning_velocity_correction
+
+        if is_turning(msg.data, all_joints.current_left_rotation_speed):
+            all_joints.current_right_rotation_speed = msg.data * param_movement_velocity_correction
+        else:
+            all_joints.current_right_rotation_speed = msg.data * param_turning_velocity_correction
 
     def left_velocity_callback(msg):
-        all_joints.current_left_rotation_speed = msg.data * 12.8
+        global param_movement_velocity_correction, param_turning_velocity_correction
+        if is_turning(all_joints.current_right_rotation_speed, msg.data):
+            all_joints.current_left_rotation_speed = msg.data * param_movement_velocity_correction
+        else:
+            all_joints.current_left_rotation_speed = msg.data * param_turning_velocity_correction
 
     rospy.Subscriber("/pbot/right_wheel/current_velocity", Float64, right_velocity_callback)
     rospy.Subscriber("/pbot/left_wheel/current_velocity", Float64, left_velocity_callback)
+
 
 def config_callback(config, level):
     global param_movement_velocity_correction, param_turning_velocity_correction
@@ -194,6 +211,7 @@ def config_callback(config, level):
     rospy.loginfo("Reconfigure request: movement_velocity_correction=%f, turning_velocity_correction=%f" % (
         param_movement_velocity_correction, param_turning_velocity_correction))
     return config
+
 
 def start():
     rospy.init_node('pbot_jointer')
