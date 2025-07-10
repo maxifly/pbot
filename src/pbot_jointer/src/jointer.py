@@ -30,6 +30,8 @@ class AllJointsState:
     def __init__(self):
         self.current_right_rotation_speed = 0.
         self.current_left_rotation_speed = 0.
+        self.cam_h = 0
+        self.cam_v = 0
 
 
 class AllStateContext:
@@ -75,6 +77,13 @@ def create_wheel_joint_state(all_joints: AllJointsState, context: AllStateContex
     # Обновляем скорость
     context.wheel_joint.velocity = [l_velocity, l_velocity,
                                     all_joints.current_right_rotation_speed, all_joints.current_right_rotation_speed]
+
+    # Рассчитаем позицию сервомоторов
+
+    cam_h_radians = math.radians(all_joints.cam_h)
+    cam_v_radians = math.radians(all_joints.cam_v)
+    context.wheel_joint.position[4] = cam_h_radians
+    context.wheel_joint.position[5] = cam_v_radians
 
     # Обновляем время
     context.wheel_joint.header.stamp = current_time
