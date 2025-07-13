@@ -23,7 +23,7 @@ wheel_separation_length = 0.137
 wheel_separation_width = 0.121
 
 param_movement_velocity_correction = 12.8
-param_turning_velocity_correction = 12.8
+param_turning_velocity_correction = 1.8
 
 
 class AllJointsState:
