@@ -6,6 +6,7 @@ from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Point, Quaternion, Pose, Twist, Vector3
 from rospy import Time
 from std_msgs.msg import Float64
+from std_msgs.msg import Int16
 from sensor_msgs.msg import JointState
 import tf
 import threading
@@ -97,9 +98,9 @@ def odometry_state(all_joints: AllJointsState, context: AllStateContext, current
 
         # Вычисление линейной и угловой скорости
         linear_velocity = wheel_radius * (
-                    all_joints.current_right_rotation_speed + all_joints.current_left_rotation_speed) / 2.0
+                all_joints.current_right_rotation_speed + all_joints.current_left_rotation_speed) / 2.0
         angular_velocity = wheel_radius * (
-                    all_joints.current_right_rotation_speed - all_joints.current_left_rotation_speed) / wheel_separation_length
+                all_joints.current_right_rotation_speed - all_joints.current_left_rotation_speed) / wheel_separation_length
 
         # Обновление позиции
         delta_x = linear_velocity * math.cos(context.th) * dt
@@ -197,8 +198,16 @@ def velocity_subscriber(all_joints: AllJointsState):
         else:
             all_joints.current_left_rotation_speed = msg.data * param_turning_velocity_correction
 
+    def cam_h_callback(msg):
+        all_joints.cam_h = msg.data
+        
+    def cam_v_callback(msg):
+        all_joints.cam_v = msg.data
+
     rospy.Subscriber("/pbot/right_wheel/current_velocity", Float64, right_velocity_callback)
     rospy.Subscriber("/pbot/left_wheel/current_velocity", Float64, left_velocity_callback)
+    rospy.Subscriber("/pbot/cam_h_servo/current_pos", Int16, cam_h_callback)
+    rospy.Subscriber("/pbot/cam_v_servo/current_pos", Int16, cam_v_callback)
 
 
 def config_callback(config, level):
