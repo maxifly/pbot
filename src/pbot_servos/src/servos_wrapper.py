@@ -45,7 +45,7 @@ class ServosWrapper:
     def callback_cam_reset(self, msg: Int16):
         rospy.logdebug("cam_reset")
         self.callback_cam_h(Int16(90))
-        self.callback_cam_v(Int16(90))
+        self.callback_cam_v(Int16(67))
 
     def callback_cam_v(self, msg: Int16):
         rospy.logdebug("cam_v. Target position %s", msg.data)

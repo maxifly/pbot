@@ -81,8 +81,8 @@ def create_wheel_joint_state(all_joints: AllJointsState, context: AllStateContex
 
     # Рассчитаем позицию сервомоторов
 
-    cam_h_radians = math.radians(all_joints.cam_h)
-    cam_v_radians = math.radians(all_joints.cam_v)
+    cam_h_radians = math.radians(all_joints.cam_h - 90)
+    cam_v_radians = math.radians(-1 * (all_joints.cam_v - 67))
     context.wheel_joint.position[4] = cam_h_radians
     context.wheel_joint.position[5] = cam_v_radians
 
